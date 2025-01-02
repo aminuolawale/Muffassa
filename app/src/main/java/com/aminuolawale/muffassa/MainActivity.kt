@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aminuolawale.muffassa.presentation.home.HomeRoute
 import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
 import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import com.aminuolawale.muffassa.presentation.signin.SignInRoute
@@ -19,13 +20,13 @@ import com.aminuolawale.muffassa.ui.theme.MuffassaTheme
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
-    val  googleAuthUiClient by lazy {
+    private val  googleAuthUiClient by lazy {
         GoogleAuthUiClient(applicationContext)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(applicationContext)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContent {
             MuffassaTheme {
                 Surface(
@@ -39,6 +40,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "profile") {
                             ProfileRoute(applicationContext, navController, lifecycleScope ,googleAuthUiClient)
+                        }
+                        composable(route = "home") {
+                            HomeRoute(navController,googleAuthUiClient.getSignedInUser())
                         }
                     }
                 }

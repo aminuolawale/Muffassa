@@ -24,6 +24,12 @@ fun SignInRoute(
 ) {
     val signInViewModel = viewModel<SignInViewModel>()
     val signInState by signInViewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(key1 = Unit) {
+        googleAuthUiClient.getSignedInUser()?.let {
+            navController.navigate("home")
+            signInViewModel.resetState()
+        }
+    }
     val activityLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode == RESULT_OK) {
@@ -43,7 +49,7 @@ fun SignInRoute(
                 Toast.LENGTH_SHORT
             ).show()
             signInViewModel.resetState()
-            navController.navigate("profile")
+            navController.navigate("home")
 
         }
     }
