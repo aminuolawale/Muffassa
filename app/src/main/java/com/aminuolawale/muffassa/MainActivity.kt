@@ -1,0 +1,48 @@
+package com.aminuolawale.muffassa
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
+import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
+import com.aminuolawale.muffassa.presentation.signin.SignInRoute
+import com.aminuolawale.muffassa.ui.theme.MuffassaTheme
+import com.google.firebase.FirebaseApp
+
+class MainActivity : ComponentActivity() {
+    val  googleAuthUiClient by lazy {
+        GoogleAuthUiClient(applicationContext)
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(applicationContext)
+        enableEdgeToEdge()
+        setContent {
+            MuffassaTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "sign_in") {
+                        composable(route = "sign_in") {
+                            SignInRoute(applicationContext,navController, lifecycleScope, googleAuthUiClient)
+                        }
+                        composable(route = "profile") {
+                            ProfileRoute(applicationContext, navController, lifecycleScope ,googleAuthUiClient)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
