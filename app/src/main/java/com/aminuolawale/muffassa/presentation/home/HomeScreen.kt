@@ -3,7 +3,6 @@ package com.aminuolawale.muffassa.presentation.home
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,8 +13,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.sharp.Home
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,16 +23,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.aminuolawale.muffassa.presentation.signin.UserData
 
 @Composable
 fun HomeScreen(userData: UserData?, onProfileImageClick: () -> Unit) {
     Box {
+        // Appbar
         Surface(color = Color.Black, modifier = Modifier.fillMaxWidth()) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -49,6 +45,7 @@ fun HomeScreen(userData: UserData?, onProfileImageClick: () -> Unit) {
             }
         }
 
+        // Grid
         Surface(
             shape = RoundedCornerShape(corner = CornerSize(0.dp)),
             border = BorderStroke(1.dp, color = Color.Black),
@@ -60,6 +57,7 @@ fun HomeScreen(userData: UserData?, onProfileImageClick: () -> Unit) {
 
         }
 
+        // Bottombar
         Surface(
             color = Color.Black,
             modifier = Modifier
@@ -91,6 +89,7 @@ fun HomeScreen(userData: UserData?, onProfileImageClick: () -> Unit) {
 
     }
 }
+
 
 
 

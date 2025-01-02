@@ -1,5 +1,6 @@
 package com.aminuolawale.muffassa.presentation.signin
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,14 +14,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aminuolawale.muffassa.R
 
 @Composable
 fun SignInScreen(onSignInClick: () -> Unit) {
     Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(20.dp)) {
+        .fillMaxSize()) {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(R.mipmap.muffassa_background),
+            contentScale = ContentScale.Crop,
+            contentDescription = "background_image"
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -28,8 +38,8 @@ fun SignInScreen(onSignInClick: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Muffassa", fontSize = 36.sp)
-            Text(text = "Remember anything", fontSize = 14.sp)
+            Text(text = "Muffassa", fontSize = 36.sp, color = Color.White)
+            Text(text = "Remember anything", fontSize = 14.sp, color = Color.White)
         }
         Spacer(modifier = Modifier.height(10.dp))
         Button(modifier = Modifier
