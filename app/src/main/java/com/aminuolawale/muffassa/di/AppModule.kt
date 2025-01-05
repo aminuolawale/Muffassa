@@ -23,6 +23,8 @@ object AppModule {
         MuffassaDatabase.DATABASE_NAME
     ).build()
 
+    @Provides
+    @Singleton
     fun providesCorpusRepository(muffassaDatabase: MuffassaDatabase):CorpusRepository =
         CorpusRepositoryImpl(muffassaDatabase.corpusDao)
 

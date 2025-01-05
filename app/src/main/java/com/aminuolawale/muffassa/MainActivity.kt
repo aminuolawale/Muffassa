@@ -1,7 +1,6 @@
 package com.aminuolawale.muffassa
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
 import com.aminuolawale.muffassa.presentation.home.HomeRoute
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(applicationContext)
-//        enableEdgeToEdge()
         setContent {
             MuffassaTheme {
                 Surface(
@@ -47,7 +46,14 @@ class MainActivity : AppCompatActivity() {
                             ProfileRoute(applicationContext, navController, lifecycleScope ,googleAuthUiClient)
                         }
                         composable(route = "home") {
-                            HomeRoute(applicationContext,navController,googleAuthUiClient.getSignedInUser(), homeViewModel)
+                            HomeRoute(
+                                navController,
+                                googleAuthUiClient.getSignedInUser(),
+                                homeViewModel
+                            )
+                        }
+                        composable(route = "corpus") {
+                            CorpusRoute()
                         }
                     }
                 }
