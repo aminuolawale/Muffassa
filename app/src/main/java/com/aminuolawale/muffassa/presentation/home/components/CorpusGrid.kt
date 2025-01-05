@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +41,19 @@ fun CorpusGrid(homeViewModel: HomeViewModel) {
                 ) {
                 }
                 Text("new", modifier = Modifier.align(Alignment.Center))
+            }
+        }
+        items(homeViewModel.state.value.corpusList){
+            Box(modifier = Modifier.padding(5.dp)) {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .size(100.dp),
+                    border = BorderStroke(1.dp, color = Color.Black),
+                    onClick = {homeViewModel.onEvent(HomeEvent.ViewCorpus(it.id!!.toLong()))},
+                ) {
+                }
+                Text(it.title, modifier = Modifier.align(Alignment.Center))
             }
         }
     }

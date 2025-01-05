@@ -10,12 +10,10 @@ import kotlinx.coroutines.flow.collectLatest
 fun HomeRoute(navController: NavController, userData: UserData?, homeViewModel: HomeViewModel) {
     LaunchedEffect(key1 = true) {
         homeViewModel.viewEffect.collectLatest {
-            when(it) {
-                HomeViewEffect.NewCorpus -> navController.navigate("corpus")
+            when (it) {
+                is HomeViewEffect.ViewCorpus -> navController.navigate("corpus?corpusId=${it.corpusId}")
             }
         }
     }
-    HomeScreen(userData, homeViewModel) {
-        navController.navigate("profile")
-    }
+    HomeScreen(navController, userData, homeViewModel)
 }

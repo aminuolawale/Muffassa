@@ -18,7 +18,7 @@ interface CorpusDao {
     suspend fun getCorpus(id: Int): Corpus?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCorpus(corpus: Corpus)
+    suspend fun insertCorpus(corpus: Corpus): Long
 
     @Query("DELETE FROM corpus WHERE id=:id")
     suspend fun deleteCorpus(id: Int)

@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.aminuolawale.muffassa.data.datasource.MuffassaDatabase
 import com.aminuolawale.muffassa.data.repository.CorpusRepositoryImpl
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
+import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +28,10 @@ object AppModule {
     @Singleton
     fun providesCorpusRepository(muffassaDatabase: MuffassaDatabase):CorpusRepository =
         CorpusRepositoryImpl(muffassaDatabase.corpusDao)
+
+    @Provides
+    @Singleton
+    fun providesGoogleAuthUiClient(application: Application) = GoogleAuthUiClient(application)
 
 
 }

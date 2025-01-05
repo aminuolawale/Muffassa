@@ -8,7 +8,7 @@ interface CorpusRepository {
 
     suspend fun getCorpus(id: Int): Corpus?
 
-    suspend fun insertCorpus(corpus: Corpus)
+    suspend fun insertCorpus(corpus: Corpus): Long
 
     suspend fun deleteCorpus(id: Int)
 

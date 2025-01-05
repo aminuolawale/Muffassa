@@ -14,7 +14,7 @@ class CorpusRepositoryImpl(private val corpusDao: CorpusDao):CorpusRepository {
         return corpusDao.getCorpus(id)
     }
 
-    override suspend fun insertCorpus(corpus: Corpus) {
+    override suspend fun insertCorpus(corpus: Corpus): Long {
         return corpusDao.insertCorpus(corpus)
     }
 

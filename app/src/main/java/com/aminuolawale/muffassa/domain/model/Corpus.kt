@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "corpus")
 data class Corpus(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val title: String,
     @ColumnInfo(name= "creator_user_id") val creatorUserId: String,
-    @ColumnInfo(name= "date_created")  val dateCreated: Long = System.currentTimeMillis(),
+    @ColumnInfo(name= "date_created") val dateCreated: Long = System.currentTimeMillis(),
     @ColumnInfo(name= "last_updated") val lastUpdated: Long = System.currentTimeMillis()
 )

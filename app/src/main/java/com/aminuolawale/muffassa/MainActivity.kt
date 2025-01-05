@@ -9,10 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
+import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
 import com.aminuolawale.muffassa.presentation.home.HomeRoute
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
@@ -24,10 +27,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val  googleAuthUiClient by lazy {
+    private val googleAuthUiClient by lazy {
         GoogleAuthUiClient(applicationContext)
     }
     private val homeViewModel: HomeViewModel by viewModels()
+    private val corpusViewModel: CorpusViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(applicationContext)
@@ -40,10 +44,20 @@ class MainActivity : AppCompatActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "sign_in") {
                         composable(route = "sign_in") {
-                            SignInRoute(applicationContext,navController, lifecycleScope, googleAuthUiClient)
+                            SignInRoute(
+                                applicationContext,
+                                navController,
+                                lifecycleScope,
+                                googleAuthUiClient
+                            )
                         }
                         composable(route = "profile") {
-                            ProfileRoute(applicationContext, navController, lifecycleScope ,googleAuthUiClient)
+                            ProfileRoute(
+                                applicationContext,
+                                navController,
+                                lifecycleScope,
+                                googleAuthUiClient
+                            )
                         }
                         composable(route = "home") {
                             HomeRoute(
@@ -52,8 +66,16 @@ class MainActivity : AppCompatActivity() {
                                 homeViewModel
                             )
                         }
-                        composable(route = "corpus") {
-                            CorpusRoute()
+                        composable(
+                            route = "corpus?corpusId={corpusId}",
+                            arguments = listOf(navArgument(name = "corpusId") {
+                                type = NavType.LongType
+                                defaultValue = -1
+
+                            })
+                        ) {
+
+                            CorpusRoute(navController, corpusViewModel, it.arguments?.getLong("corpusId"))
                         }
                     }
                 }
