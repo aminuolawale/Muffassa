@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,8 +20,10 @@ import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import com.aminuolawale.muffassa.presentation.signin.SignInRoute
 import com.aminuolawale.muffassa.ui.theme.MuffassaTheme
 import com.google.firebase.FirebaseApp
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
     private val  googleAuthUiClient by lazy {
         GoogleAuthUiClient(applicationContext)
     }

@@ -51,9 +51,11 @@ android {
         }
     }
 }
+kapt {
+    correctErrorTypes = true
+}
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,13 +65,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.play.services.auth)
-    implementation(libs.firebase.common.ktx)
-    implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.room.common)
-    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,9 +77,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Import the Firebase BoM
+
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.auth.ktx)
+
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -97,6 +100,11 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.fragment)
 
+    // Room
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
 
 }
