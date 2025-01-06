@@ -28,9 +28,11 @@ class HomeViewModel @Inject constructor(
     val viewEffect = _viewEffect.asSharedFlow()
 
     init {
-        viewModelScope.launch {
-            corpusRepository.getCorpora()
-                .collect { corpusList -> _state.update { it.copy(corpusList = corpusList) } }
+        googleAuthUiClient.getSignedInUser()?.userId?.let {
+            viewModelScope.launch {
+                corpusRepository.getCorpora(it)
+                    .collect { corpusList -> _state.update { it.copy(corpusList = corpusList) } }
+            }
         }
     }
 
@@ -49,7 +51,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-           is HomeEvent.ViewCorpus -> viewModelScope.launch {
+            is HomeEvent.ViewCorpus -> viewModelScope.launch {
                 _viewEffect.emit(HomeViewEffect.ViewCorpus(event.corpusId))
             }
         }

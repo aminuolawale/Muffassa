@@ -4,7 +4,7 @@ import com.aminuolawale.muffassa.domain.model.Corpus
 import kotlinx.coroutines.flow.Flow
 
 interface CorpusRepository {
-    fun getCorpora(): Flow<List<Corpus>>
+    fun getCorpora(userId: String): Flow<List<Corpus>>
 
     suspend fun getCorpus(id: Int): Corpus?
 

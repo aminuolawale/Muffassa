@@ -6,8 +6,8 @@ import com.aminuolawale.muffassa.domain.repository.CorpusRepository
 import kotlinx.coroutines.flow.Flow
 
 class CorpusRepositoryImpl(private val corpusDao: CorpusDao):CorpusRepository {
-    override fun getCorpora(): Flow<List<Corpus>> {
-        return corpusDao.getCorpora()
+    override fun getCorpora(userId: String): Flow<List<Corpus>> {
+        return corpusDao.getCorpora(userId)
     }
 
     override suspend fun getCorpus(id: Int): Corpus? {
