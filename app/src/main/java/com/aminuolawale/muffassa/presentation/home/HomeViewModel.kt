@@ -1,5 +1,6 @@
 package com.aminuolawale.muffassa.presentation.home
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.model.Corpus
@@ -54,7 +55,33 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.ViewCorpus -> viewModelScope.launch {
                 _viewEffect.emit(HomeViewEffect.ViewCorpus(event.corpusId))
             }
+
+            is HomeEvent.AddSelection -> {
+                _state.update {
+                    it.copy(isSelecting = true, selectionList = it.selectionList.plus(event.itemId))
+                }
+            }
+
+            HomeEvent.EndSelection -> _state.update {
+                it.copy(
+                    isSelecting = false,
+                    selectionList = emptySet()
+                )
+            }
+
+            HomeEvent.DeleteCorpora -> {
+                viewModelScope.launch {
+                    corpusRepository.deleteCorpora(_state.value.selectionList.map { it.toInt() })
+                }
+            }
         }
+    }
+
+    fun onViewEffectComplete() {
+        viewModelScope.launch {
+            _viewEffect.emit(HomeViewEffect.NoViewEffect)
+        }
+
     }
 
 }

@@ -12,4 +12,6 @@ interface CorpusRepository {
 
     suspend fun deleteCorpus(id: Int)
 
+    suspend fun deleteCorpora(ids: List<Int>)
+
 }

@@ -22,4 +22,8 @@ class CorpusRepositoryImpl(private val corpusDao: CorpusDao):CorpusRepository {
         return corpusDao.deleteCorpus(id)
     }
 
+    override suspend fun deleteCorpora(ids: List<Int>) {
+        return corpusDao.deleteCorpora(ids)
+    }
+
 }

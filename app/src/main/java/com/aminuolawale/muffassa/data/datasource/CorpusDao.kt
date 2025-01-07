@@ -22,4 +22,7 @@ interface CorpusDao {
 
     @Query("DELETE FROM corpus WHERE id=:id")
     suspend fun deleteCorpus(id: Int)
+
+    @Query("DELETE FROM corpus WHERE id in (:ids)")
+    suspend fun deleteCorpora(ids: List<Int>)
 }

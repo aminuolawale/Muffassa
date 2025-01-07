@@ -1,12 +1,15 @@
 package com.aminuolawale.muffassa
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
@@ -16,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
+import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeRoute
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val homeViewModel: HomeViewModel by viewModels()
     private val corpusViewModel: CorpusViewModel by viewModels()
+    private var callback: OnBackPressedCallback? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(applicationContext)
@@ -41,6 +46,15 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    homeViewModel.state.collectAsState().let {
+                        if (it.value.isSelecting) {
+                            callback = this.onBackPressedDispatcher.addCallback {
+                                homeViewModel.onEvent(HomeEvent.EndSelection)
+                            }
+                        } else {
+                            callback?.remove()
+                        }
+                    }
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "sign_in") {
                         composable(route = "sign_in") {
@@ -75,7 +89,11 @@ class MainActivity : AppCompatActivity() {
                             })
                         ) {
 
-                            CorpusRoute(navController, corpusViewModel, it.arguments?.getLong("corpusId"))
+                            CorpusRoute(
+                                navController,
+                                corpusViewModel,
+                                it.arguments?.getLong("corpusId")
+                            )
                         }
                     }
                 }

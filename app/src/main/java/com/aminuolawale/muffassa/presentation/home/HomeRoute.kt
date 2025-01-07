@@ -11,7 +11,12 @@ fun HomeRoute(navController: NavController, userData: UserData?, homeViewModel: 
     LaunchedEffect(key1 = true) {
         homeViewModel.viewEffect.collectLatest {
             when (it) {
-                is HomeViewEffect.ViewCorpus -> navController.navigate("corpus?corpusId=${it.corpusId}")
+                is HomeViewEffect.ViewCorpus -> {
+                    navController.navigate("corpus?corpusId=${it.corpusId}")
+                    homeViewModel.onViewEffectComplete()
+                }
+
+                HomeViewEffect.NoViewEffect -> {}
             }
         }
     }

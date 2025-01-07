@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -25,14 +26,22 @@ import coil3.compose.AsyncImage
 import com.aminuolawale.muffassa.presentation.signin.UserData
 
 
+sealed class BottomBarState {
+    data object Default : BottomBarState()
+    data object Selection : BottomBarState()
+}
+
 @Composable
 fun ContentWithBottomBar(
     navController: NavController,
     userData: UserData?,
+    onDeleteClick: () -> Unit = {},
+    bottomBarState: BottomBarState = BottomBarState.Default,
     content: @Composable () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         content()
+
         // Bottombar
         Surface(
             color = Color.Black,
@@ -48,22 +57,30 @@ fun ContentWithBottomBar(
                     .padding(20.dp, 0.dp, 20.dp, 0.dp)
                     .fillMaxSize()
             ) {
-                Icon(
-                    Icons.Outlined.Home,
-                    contentDescription = "Home",
-                    tint = Color.White,
-                    modifier = Modifier.clickable { navController.navigate("home") })
-                AsyncImage(
-                    model = userData?.profilePictureUrl,
-                    contentDescription = "profile image",
-                    modifier = Modifier
-                        .size(32.dp)
-                        .clip(
-                            CircleShape
-                        )
-                        .clickable { navController.navigate("profile") },
-                    contentScale = ContentScale.Crop
-                )
+                if (bottomBarState is BottomBarState.Default) {
+                    Icon(
+                        Icons.Outlined.Home,
+                        contentDescription = "Home",
+                        tint = Color.White,
+                        modifier = Modifier.clickable { navController.navigate("home") })
+                    AsyncImage(
+                        model = userData?.profilePictureUrl,
+                        contentDescription = "profile image",
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(
+                                CircleShape
+                            )
+                            .clickable { navController.navigate("profile") },
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Icon(
+                        Icons.Outlined.Delete,
+                        contentDescription = "Delete",
+                        tint = Color.White,
+                        modifier = Modifier.clickable { onDeleteClick.invoke() })
+                }
             }
         }
     }
