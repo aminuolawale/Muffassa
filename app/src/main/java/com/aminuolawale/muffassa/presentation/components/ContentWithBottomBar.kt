@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -29,6 +31,7 @@ import com.aminuolawale.muffassa.presentation.signin.UserData
 sealed class BottomBarState {
     data object Default : BottomBarState()
     data object Selection : BottomBarState()
+    data object CorpusView : BottomBarState()
 }
 
 @Composable
@@ -40,7 +43,9 @@ fun ContentWithBottomBar(
     bottomBarState: BottomBarState = BottomBarState.Default,
     content: @Composable () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize().clickable { onClick.invoke() }, ) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .clickable { onClick.invoke() }) {
         content()
 
         // Bottombar
@@ -58,29 +63,46 @@ fun ContentWithBottomBar(
                     .padding(20.dp, 0.dp, 20.dp, 0.dp)
                     .fillMaxSize()
             ) {
-                if (bottomBarState is BottomBarState.Default) {
-                    Icon(
-                        Icons.Outlined.Home,
-                        contentDescription = "Home",
-                        tint = Color.White,
-                        modifier = Modifier.clickable { navController.navigate("home") })
-                    AsyncImage(
-                        model = userData?.profilePictureUrl,
-                        contentDescription = "profile image",
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(
-                                CircleShape
-                            )
-                            .clickable { navController.navigate("profile") },
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Icon(
-                        Icons.Outlined.Delete,
-                        contentDescription = "Delete",
-                        tint = Color.White,
-                        modifier = Modifier.clickable { onDeleteClick.invoke() })
+                when (bottomBarState) {
+                    BottomBarState.CorpusView -> {
+                        Icon(
+                            Icons.Outlined.Menu,
+                            contentDescription = "Resources",
+                            tint = Color.White,
+                            modifier = Modifier.clickable { })
+                        Icon(
+                            Icons.Outlined.Add,
+                            contentDescription = "Resources",
+                            tint = Color.White,
+                            modifier = Modifier.clickable { })
+                    }
+
+                    BottomBarState.Default -> {
+                        Icon(
+                            Icons.Outlined.Home,
+                            contentDescription = "Home",
+                            tint = Color.White,
+                            modifier = Modifier.clickable { navController.navigate("home") })
+                        AsyncImage(
+                            model = userData?.profilePictureUrl,
+                            contentDescription = "profile image",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(
+                                    CircleShape
+                                )
+                                .clickable { navController.navigate("profile") },
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    BottomBarState.Selection -> {
+                        Icon(
+                            Icons.Outlined.Delete,
+                            contentDescription = "Delete",
+                            tint = Color.White,
+                            modifier = Modifier.clickable { onDeleteClick.invoke() })
+                    }
                 }
             }
         }

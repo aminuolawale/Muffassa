@@ -4,10 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -19,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aminuolawale.muffassa.presentation.components.BottomBarState
 import com.aminuolawale.muffassa.presentation.components.ContentWithBottomBar
 
 @Composable
@@ -27,35 +26,60 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
         ContentWithBottomBar(
             navController,
             userData = corpusViewModel.userData,
+            bottomBarState = BottomBarState.CorpusView,
             onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) }) {
-            Column(modifier = Modifier.fillMaxSize().padding(20.dp, 60.dp, 20.dp, 0.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(20.dp, 60.dp, 20.dp, 0.dp)
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (it.value.editState == CorpusEditState.TITLE) {
-                        TextField(modifier = Modifier.padding(0.dp),
-                            value = it.value.corpus?.title ?: "Untitled",
-                            textStyle = TextStyle(fontSize = 36.sp),
-                            onValueChange = {
-                                corpusViewModel.onEvent(CorpusEvent.TitleChanged(it))
-                            })
-                    } else {
-                        Text(
-                            text = it.value.corpus?.title ?: "Untitled",
-                            fontSize = 36.sp,
-                            modifier = Modifier.clickable {
-                                corpusViewModel.onEvent(
-                                    CorpusEvent.BeginEdit(
-                                        CorpusEditState.TITLE
-                                    )
+                    TitleArea(
+                        text = it.value.corpus?.title ?: "Untitled",
+                        isEditing = it.value.editState == CorpusEditState.TITLE,
+                        onClick = {
+                            corpusViewModel.onEvent(
+                                CorpusEvent.BeginEdit(
+                                    CorpusEditState.TITLE
                                 )
-                            })
-                    }
+                            )
+                        },
+                        onValueChange = { value ->
+                            corpusViewModel.onEvent(
+                                CorpusEvent.TitleChanged(
+                                    value
+                                )
+                            )
+                        })
                 }
 
             }
         }
+    }
+}
+
+@Composable
+fun TitleArea(
+    text: String,
+    isEditing: Boolean,
+    onClick: () -> Unit,
+    onValueChange: (value: String) -> Unit
+) {
+    if (isEditing) {
+        TextField(modifier = Modifier.padding(0.dp),
+            value = text,
+            textStyle = TextStyle(fontSize = 36.sp),
+            onValueChange = { onValueChange.invoke(it) })
+    } else {
+        Text(
+            text = text,
+            fontSize = 36.sp,
+            modifier = Modifier.clickable {
+                onClick.invoke()
+            })
     }
 }
