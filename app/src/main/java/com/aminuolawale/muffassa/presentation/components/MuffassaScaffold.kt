@@ -2,14 +2,13 @@ package com.aminuolawale.muffassa.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -25,15 +24,14 @@ fun MuffassaScaffold(
     screen: Screen,
     profilePictureUrl: String? = null,
     showMenuAppBar: Boolean = false,
+    showSearchBar: Boolean = false,
     onClick: () -> Unit = {},
     onFabClick: () -> Unit = {},
     onNavigationIconClick: () -> Unit = {},
-    onHomeClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
+    onSearchClick: () -> Unit = {},
     onMenuAppBarCancelClick: () -> Unit = {},
     onMenuAppBarDeleteClick: () -> Unit = {},
-    onResourceClick: () -> Unit = {},
-    onArtefactClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
     val scrollBehavior =
@@ -62,13 +60,15 @@ fun MuffassaScaffold(
                                 )
                             }
                         })
-                    } else {
-                        HomeTopAppBar(profilePictureUrl, onProfileClick, scrollBehavior)
+                    }
+
+                    else {
+                        HomeTopAppBar(scrollBehavior, profilePictureUrl, onProfileClick, onSearchClick)
 
                     }
                 }
 
-                Screen.Profile -> HomeTopAppBar(profilePictureUrl, onProfileClick, scrollBehavior)
+                Screen.Profile -> HomeTopAppBar( scrollBehavior)
                 Screen.SignIn -> {}
             }
         },

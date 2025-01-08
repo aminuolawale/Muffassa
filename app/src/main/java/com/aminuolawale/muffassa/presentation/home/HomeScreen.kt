@@ -15,9 +15,10 @@ fun HomeScreen(navController: NavController, userData: UserData?, homeViewModel:
             screen = Screen.Home,
             profilePictureUrl = userData?.profilePictureUrl,
             showMenuAppBar = it.value.isSelecting,
+            showSearchBar = it.value.isSearching,
             onFabClick = { homeViewModel.onEvent(HomeEvent.NewCorpus) },
-            onHomeClick = { navController.navigate(Screen.Home.route) },
             onProfileClick = { navController.navigate(Screen.Profile.route) },
+            onSearchClick = {homeViewModel.onEvent(HomeEvent.BeginSearch)},
             onMenuAppBarCancelClick = {homeViewModel.onEvent(HomeEvent.EndSelection)},
             onMenuAppBarDeleteClick = {homeViewModel.onEvent(HomeEvent.DeleteCorpora)}) {
             CorpusGrid(homeViewModel)

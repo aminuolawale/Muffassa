@@ -27,9 +27,7 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
     corpusViewModel.state.collectAsState().let {
         MuffassaScaffold(screen = Screen.Corpus,
             onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) },
-            onNavigationIconClick = {navController.popBackStack()},
-            onResourceClick = { corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.RESOURCES)) },
-            onArtefactClick = { corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.ARTEFACTS)) }) {
+            onNavigationIconClick = {navController.popBackStack()}) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()

@@ -6,4 +6,5 @@ sealed class HomeEvent {
     data class  AddSelection(val corpusId: String): HomeEvent()
     data object  EndSelection: HomeEvent()
     data object  DeleteCorpora: HomeEvent()
+    data object BeginSearch: HomeEvent()
 }

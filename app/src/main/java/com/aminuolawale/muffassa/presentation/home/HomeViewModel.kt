@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
         googleAuthUiClient.getSignedInUser()?.userId?.let {
             viewModelScope.launch {
                 corpusRepository.getCorpora(it)
-                    .collect { corpusList -> _state.update { it.copy(corpusList = corpusList.sortedBy { corpus -> corpus.lastUpdated }) } }
+                    .collect { corpusList -> _state.update { it.copy(corpusList = corpusList.sortedBy { corpus -> -corpus.lastUpdated }) } }
             }
         }
     }
@@ -79,6 +79,10 @@ class HomeViewModel @Inject constructor(
                     corpusRepository.deleteCorpora(_state.value.selectionList.toList())
                     _state.update { it.copy(isSelecting = false) }
                 }
+            }
+
+            HomeEvent.BeginSearch -> {
+                _state.update { it.copy(isSearching = true) }
             }
         }
     }

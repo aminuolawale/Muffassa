@@ -26,14 +26,15 @@ import coil3.compose.AsyncImage
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopAppBar(
-    profilePictureUrl: String?,
-    onProfileClick: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
+    profilePictureUrl: String? = null,
+    onProfileClick: () -> Unit={},
+    onSearchClick: () -> Unit={},
 ) {
     TopAppBar(
         title = { Text("Corpora") },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {onSearchClick()}) {
                 Icon(Icons.Default.Search, contentDescription = "Search")
             }
             Spacer(modifier = Modifier.width(10.dp))
