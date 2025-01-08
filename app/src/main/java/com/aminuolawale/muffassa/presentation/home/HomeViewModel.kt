@@ -45,7 +45,7 @@ class HomeViewModel @Inject constructor(
                         val corpusId = UUID.randomUUID().toString()
                          corpusRepository.insertCorpus(
                             Corpus( id = corpusId,
-                                title = "untitled",
+                                title = "Untitled",
                                 creatorUserId = it
                             )
                         )

@@ -35,11 +35,12 @@ sealed class BottomBarState {
 fun ContentWithBottomBar(
     navController: NavController,
     userData: UserData?,
+    onClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
     bottomBarState: BottomBarState = BottomBarState.Default,
     content: @Composable () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().clickable { onClick.invoke() }, ) {
         content()
 
         // Bottombar

@@ -1,6 +1,5 @@
 package com.aminuolawale.muffassa.presentation.corpus
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
@@ -17,7 +16,6 @@ import javax.inject.Inject
 class CorpusViewModel @Inject constructor(
     googleAuthUiClient: GoogleAuthUiClient,
     private val corpusRepository: CorpusRepository,
-    savedStateHandle: SavedStateHandle,
 ) :
     ViewModel() {
     var userData: UserData? = null
@@ -31,12 +29,12 @@ class CorpusViewModel @Inject constructor(
     }
 
     fun initialize(corpusId: String?) {
-            corpusId?.let {
-                viewModelScope.launch {
-                    val corpus = corpusRepository.getCorpus(it)
-                    _state.update { it.copy(corpus = corpus) }
-                }
+        corpusId?.let {
+            viewModelScope.launch {
+                val corpus = corpusRepository.getCorpus(it)
+                _state.update { it.copy(corpus = corpus) }
             }
+        }
     }
 
     fun onEvent(corpusEvent: CorpusEvent) {
@@ -46,6 +44,17 @@ class CorpusViewModel @Inject constructor(
                     it.copy(
                         corpus = it.corpus?.copy(title = corpusEvent.value)
                     )
+                }
+            }
+
+            is CorpusEvent.BeginEdit -> {
+                _state.update { it.copy(editState = corpusEvent.editField) }
+            }
+
+            CorpusEvent.EndEdit -> {
+                _state.update { it.copy(editState = CorpusEditState.NONE) }
+                _state.value.corpus?.let {
+                    viewModelScope.launch { corpusRepository.insertCorpus(it) }
                 }
             }
         }

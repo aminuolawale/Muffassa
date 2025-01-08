@@ -25,7 +25,6 @@ import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 import com.aminuolawale.muffassa.presentation.home.HomeViewState
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CorpusGrid(homeViewModel: HomeViewModel) {
     // Grid

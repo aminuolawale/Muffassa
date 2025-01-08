@@ -14,8 +14,8 @@ fun HomeScreen(navController: NavController, userData: UserData?, homeViewModel:
         ContentWithBottomBar(
             navController,
             userData,
-            { homeViewModel.onEvent(HomeEvent.DeleteCorpora) },
-            if (it.value.isSelecting) BottomBarState.Selection else BottomBarState.Default,
+            onDeleteClick = { homeViewModel.onEvent(HomeEvent.DeleteCorpora) },
+            bottomBarState = if (it.value.isSelecting) BottomBarState.Selection else BottomBarState.Default,
         ) {
             CorpusGrid(homeViewModel)
         }
