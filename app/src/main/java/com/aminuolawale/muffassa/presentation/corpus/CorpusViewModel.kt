@@ -30,13 +30,13 @@ class CorpusViewModel @Inject constructor(
 
     }
 
-    fun initialize(corpusId: Long?) {
-        corpusId?.let {
-            viewModelScope.launch {
-                val corpus = corpusRepository.getCorpus(it.toInt())
-                _state.update { it.copy(corpus = corpus) }
+    fun initialize(corpusId: String?) {
+            corpusId?.let {
+                viewModelScope.launch {
+                    val corpus = corpusRepository.getCorpus(it)
+                    _state.update { it.copy(corpus = corpus) }
+                }
             }
-        }
     }
 
     fun onEvent(corpusEvent: CorpusEvent) {

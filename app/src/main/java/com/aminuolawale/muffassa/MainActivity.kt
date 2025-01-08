@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity() {
                         composable(
                             route = "corpus?corpusId={corpusId}",
                             arguments = listOf(navArgument(name = "corpusId") {
-                                type = NavType.LongType
-                                defaultValue = -1
+                                type = NavType.StringType
+                                defaultValue = ""
 
                             })
                         ) {
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                             CorpusRoute(
                                 navController,
                                 corpusViewModel,
-                                it.arguments?.getLong("corpusId")
+                                it.arguments?.getString("corpusId")
                             )
                         }
                     }

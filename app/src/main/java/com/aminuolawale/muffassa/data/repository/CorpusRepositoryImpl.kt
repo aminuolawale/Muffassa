@@ -10,7 +10,7 @@ class CorpusRepositoryImpl(private val corpusDao: CorpusDao):CorpusRepository {
         return corpusDao.getCorpora(userId)
     }
 
-    override suspend fun getCorpus(id: Int): Corpus? {
+    override suspend fun getCorpus(id: String): Corpus? {
         return corpusDao.getCorpus(id)
     }
 
@@ -18,11 +18,11 @@ class CorpusRepositoryImpl(private val corpusDao: CorpusDao):CorpusRepository {
         return corpusDao.insertCorpus(corpus)
     }
 
-    override suspend fun deleteCorpus(id: Int) {
+    override suspend fun deleteCorpus(id: String) {
         return corpusDao.deleteCorpus(id)
     }
 
-    override suspend fun deleteCorpora(ids: List<Int>) {
+    override suspend fun deleteCorpora(ids: List<String>) {
         return corpusDao.deleteCorpora(ids)
     }
 

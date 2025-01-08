@@ -15,14 +15,14 @@ interface CorpusDao {
     fun getCorpora(userId: String): Flow<List<Corpus>>
 
     @Query("SELECT * FROM corpus WHERE id = :id")
-    suspend fun getCorpus(id: Int): Corpus?
+    suspend fun getCorpus(id: String): Corpus?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCorpus(corpus: Corpus): Long
 
     @Query("DELETE FROM corpus WHERE id=:id")
-    suspend fun deleteCorpus(id: Int)
+    suspend fun deleteCorpus(id: String)
 
     @Query("DELETE FROM corpus WHERE id in (:ids)")
-    suspend fun deleteCorpora(ids: List<Int>)
+    suspend fun deleteCorpora(ids: List<String>)
 }

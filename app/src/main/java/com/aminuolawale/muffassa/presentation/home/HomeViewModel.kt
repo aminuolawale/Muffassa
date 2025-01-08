@@ -1,6 +1,5 @@
 package com.aminuolawale.muffassa.presentation.home
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.model.Corpus
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 
@@ -42,8 +42,9 @@ class HomeViewModel @Inject constructor(
             HomeEvent.NewCorpus ->
                 googleAuthUiClient.getSignedInUser()?.userId?.let {
                     viewModelScope.launch {
-                        val corpusId = corpusRepository.insertCorpus(
-                            Corpus(
+                        val corpusId = UUID.randomUUID().toString()
+                         corpusRepository.insertCorpus(
+                            Corpus( id = corpusId,
                                 title = "untitled",
                                 creatorUserId = it
                             )
@@ -57,8 +58,16 @@ class HomeViewModel @Inject constructor(
             }
 
             is HomeEvent.AddSelection -> {
+                var selectedItems = _state.value.selectionList
+                var isSelecting = true
+                if (selectedItems.contains(event.corpusId)) {
+                   selectedItems =  selectedItems.minus(event.corpusId)
+                    isSelecting = selectedItems.isNotEmpty()
+                } else {
+                   selectedItems =  selectedItems.plus(event.corpusId)
+                }
                 _state.update {
-                    it.copy(isSelecting = true, selectionList = it.selectionList.plus(event.itemId))
+                    it.copy(isSelecting = isSelecting, selectionList = selectedItems)
                 }
             }
 
@@ -71,7 +80,8 @@ class HomeViewModel @Inject constructor(
 
             HomeEvent.DeleteCorpora -> {
                 viewModelScope.launch {
-                    corpusRepository.deleteCorpora(_state.value.selectionList.map { it.toInt() })
+                    corpusRepository.deleteCorpora(_state.value.selectionList.toList())
+                    _state.update { it.copy(isSelecting = false) }
                 }
             }
         }

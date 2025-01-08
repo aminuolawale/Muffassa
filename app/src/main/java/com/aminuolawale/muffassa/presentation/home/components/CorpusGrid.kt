@@ -19,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.aminuolawale.muffassa.domain.model.Corpus
 import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
+import com.aminuolawale.muffassa.presentation.home.HomeViewState
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -48,26 +50,47 @@ fun CorpusGrid(homeViewModel: HomeViewModel) {
                     Text("new", modifier = Modifier.align(Alignment.Center))
                 }
             }
-            items(state.value.corpusList) {
-                Box(modifier = Modifier.padding(5.dp)) {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .size(100.dp)
-                            .combinedClickable(onClick = {
-                                if (state.value.isSelecting) homeViewModel.onEvent(
-                                    HomeEvent.AddSelection(it.id!!.toLong())
-                                ) else homeViewModel.onEvent(HomeEvent.ViewCorpus(it.id!!.toLong()))
-                            },
-                                onLongClick = { homeViewModel.onEvent(HomeEvent.AddSelection(it.id!!.toLong())) }),
-                        border = BorderStroke(1.dp, color = Color.Black),
-                        color = if (state.value.selectionList.contains(it.id!!.toLong())) Color.Red else Color.White
-                    ) {
-                    }
-                    Text(it.title, modifier = Modifier.align(Alignment.Center))
-                }
+            items(state.value.corpusList) { corpus ->
+                CorpusCard(
+                    corpus = corpus,
+                    isSelected = isCorpusSelected(state.value, corpus),
+                    onClick = {
+                        if (state.value.isSelecting) homeViewModel.onEvent(
+                            HomeEvent.AddSelection(corpus.id)
+                        ) else homeViewModel.onEvent(HomeEvent.ViewCorpus(corpus.id))
+                    },
+                    onLongClick = { homeViewModel.onEvent(HomeEvent.AddSelection(corpus.id)) })
             }
         }
     }
 
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun CorpusCard(
+    corpus: Corpus,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit
+) {
+    Box(modifier = Modifier.padding(5.dp)) {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .size(100.dp)
+                .combinedClickable(
+                    onClick = onClick,
+                    onLongClick = onLongClick
+                ),
+            border = BorderStroke(1.dp, color = Color.Black),
+            color = if (isSelected) Color.Red else Color.White
+        ) {
+        }
+        Text(corpus.title, modifier = Modifier.align(Alignment.Center))
+    }
+}
+
+fun isCorpusSelected(state: HomeViewState, corpus: Corpus): Boolean {
+    return state.selectionList.contains(corpus.id)
 }
