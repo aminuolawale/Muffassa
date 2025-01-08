@@ -20,8 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.Screen
-import com.aminuolawale.muffassa.presentation.components.BottomBarState
-import com.aminuolawale.muffassa.presentation.components.ContentWithBottomBar
 import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 
 @Composable
