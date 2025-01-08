@@ -10,4 +10,5 @@ data class CorpusViewState(
 enum class CorpusEditState {
     NONE,
     TITLE,
+    DESCRIPTION,
 }

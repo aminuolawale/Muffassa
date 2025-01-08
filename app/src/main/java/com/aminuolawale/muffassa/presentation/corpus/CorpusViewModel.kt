@@ -16,8 +16,7 @@ import javax.inject.Inject
 class CorpusViewModel @Inject constructor(
     googleAuthUiClient: GoogleAuthUiClient,
     private val corpusRepository: CorpusRepository,
-) :
-    ViewModel() {
+) : ViewModel() {
     var userData: UserData? = null
     private val _state = MutableStateFlow(CorpusViewState())
     val state = _state.asStateFlow()
@@ -56,6 +55,10 @@ class CorpusViewModel @Inject constructor(
                 _state.value.corpus?.let {
                     viewModelScope.launch { corpusRepository.insertCorpus(it) }
                 }
+            }
+
+            is CorpusEvent.DescriptionChanged -> {
+                _state.update { it.copy(corpus = it.corpus?.copy(description = corpusEvent.value)) }
             }
         }
     }

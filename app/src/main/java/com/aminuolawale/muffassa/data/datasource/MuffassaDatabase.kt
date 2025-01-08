@@ -10,6 +10,6 @@ import com.aminuolawale.muffassa.domain.model.Corpus
 abstract class MuffassaDatabase: RoomDatabase() {
     abstract val corpusDao: CorpusDao
     companion object {
-        const val  DATABASE_NAME = "muffassa_5"
+        const val  DATABASE_NAME = "muffassa_6"
     }
 }

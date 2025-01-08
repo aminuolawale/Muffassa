@@ -55,6 +55,18 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
                                 )
                             )
                         })
+
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DescriptionArea(modifier = Modifier.fillMaxWidth(),
+                        text = it.value.corpus?.description ?: "Description",
+                        isEditing = it.value.editState == CorpusEditState.DESCRIPTION,
+                        onClick = { corpusViewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
+                        onValueChange = { corpusViewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
                 }
 
             }
@@ -81,5 +93,20 @@ fun TitleArea(
             modifier = Modifier.clickable {
                 onClick.invoke()
             })
+    }
+}
+
+@Composable
+fun DescriptionArea(
+    modifier: Modifier,
+    text: String,
+    isEditing: Boolean,
+    onClick: () -> Unit,
+    onValueChange: (value: String) -> Unit
+) {
+    if (isEditing) {
+        TextField(modifier = modifier, value = text, onValueChange = { onValueChange.invoke(it) })
+    } else {
+        Text(text = text, modifier = modifier.clickable { onClick.invoke() })
     }
 }
