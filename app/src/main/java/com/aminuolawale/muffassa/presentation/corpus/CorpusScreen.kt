@@ -4,8 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -27,7 +29,9 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
             navController,
             userData = corpusViewModel.userData,
             bottomBarState = BottomBarState.CorpusView,
-            onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) }) {
+            onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) },
+            onResourceClick = { corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.RESOURCES)) },
+            onArtefactClick = {corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.ARTEFACTS))}) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,6 +71,10 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
                         isEditing = it.value.editState == CorpusEditState.DESCRIPTION,
                         onClick = { corpusViewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
                         onValueChange = { corpusViewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                    ContentArea(it.value.activeTab)
                 }
 
             }
@@ -108,5 +116,18 @@ fun DescriptionArea(
         TextField(modifier = modifier, value = text, onValueChange = { onValueChange.invoke(it) })
     } else {
         Text(text = text, modifier = modifier.clickable { onClick.invoke() })
+    }
+}
+
+@Composable
+fun ContentArea(activeTab: CorpusTab) {
+    when (activeTab) {
+        CorpusTab.RESOURCES -> {
+            Text("Resources")
+        }
+
+        CorpusTab.ARTEFACTS -> {
+            Text("Artefacts")
+        }
     }
 }

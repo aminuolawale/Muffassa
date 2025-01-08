@@ -38,9 +38,11 @@ sealed class BottomBarState {
 fun ContentWithBottomBar(
     navController: NavController,
     userData: UserData?,
+    bottomBarState: BottomBarState = BottomBarState.Default,
     onClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
-    bottomBarState: BottomBarState = BottomBarState.Default,
+    onResourceClick: () -> Unit = {},
+    onArtefactClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
     Box(modifier = Modifier
@@ -69,12 +71,12 @@ fun ContentWithBottomBar(
                             Icons.Outlined.Menu,
                             contentDescription = "Resources",
                             tint = Color.White,
-                            modifier = Modifier.clickable { })
+                            modifier = Modifier.clickable { onResourceClick.invoke() })
                         Icon(
                             Icons.Outlined.Add,
                             contentDescription = "Resources",
                             tint = Color.White,
-                            modifier = Modifier.clickable { })
+                            modifier = Modifier.clickable { onArtefactClick.invoke() })
                     }
 
                     BottomBarState.Default -> {

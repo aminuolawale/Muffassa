@@ -60,6 +60,10 @@ class CorpusViewModel @Inject constructor(
             is CorpusEvent.DescriptionChanged -> {
                 _state.update { it.copy(corpus = it.corpus?.copy(description = corpusEvent.value)) }
             }
+
+            is CorpusEvent.SelectTab -> {
+                _state.update { it.copy(activeTab = corpusEvent.tab) }
+            }
         }
     }
 }
