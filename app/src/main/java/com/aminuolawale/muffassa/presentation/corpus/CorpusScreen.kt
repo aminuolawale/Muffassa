@@ -19,19 +19,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.components.BottomBarState
 import com.aminuolawale.muffassa.presentation.components.ContentWithBottomBar
+import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 
 @Composable
 fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel) {
     corpusViewModel.state.collectAsState().let {
-        ContentWithBottomBar(
-            navController,
-            userData = corpusViewModel.userData,
-            bottomBarState = BottomBarState.CorpusView,
+        MuffassaScaffold(screen = Screen.Corpus,
             onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) },
+            onNavigationIconClick = {navController.popBackStack()},
             onResourceClick = { corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.RESOURCES)) },
-            onArtefactClick = {corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.ARTEFACTS))}) {
+            onArtefactClick = { corpusViewModel.onEvent(CorpusEvent.SelectTab(CorpusTab.ARTEFACTS)) }) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()

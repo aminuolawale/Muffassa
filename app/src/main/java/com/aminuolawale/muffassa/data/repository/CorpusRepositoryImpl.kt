@@ -15,7 +15,7 @@ class CorpusRepositoryImpl(private val corpusDao: CorpusDao):CorpusRepository {
     }
 
     override suspend fun insertCorpus(corpus: Corpus): Long {
-        return corpusDao.insertCorpus(corpus)
+        return corpusDao.insertCorpus(corpus.copy(lastUpdated = System.currentTimeMillis()))
     }
 
     override suspend fun deleteCorpus(id: String) {

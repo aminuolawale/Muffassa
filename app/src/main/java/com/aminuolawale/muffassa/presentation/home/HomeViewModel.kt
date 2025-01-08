@@ -20,8 +20,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val corpusRepository: CorpusRepository,
     private val googleAuthUiClient: GoogleAuthUiClient
-) :
-    ViewModel() {
+) : ViewModel() {
     private var _state = MutableStateFlow(HomeViewState())
     val state = _state.asStateFlow()
 
@@ -32,26 +31,24 @@ class HomeViewModel @Inject constructor(
         googleAuthUiClient.getSignedInUser()?.userId?.let {
             viewModelScope.launch {
                 corpusRepository.getCorpora(it)
-                    .collect { corpusList -> _state.update { it.copy(corpusList = corpusList) } }
+                    .collect { corpusList -> _state.update { it.copy(corpusList = corpusList.sortedBy { corpus -> corpus.lastUpdated }) } }
             }
         }
     }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            HomeEvent.NewCorpus ->
-                googleAuthUiClient.getSignedInUser()?.userId?.let {
-                    viewModelScope.launch {
-                        val corpusId = UUID.randomUUID().toString()
-                         corpusRepository.insertCorpus(
-                            Corpus( id = corpusId,
-                                title = "Untitled",
-                                creatorUserId = it
-                            )
+            HomeEvent.NewCorpus -> googleAuthUiClient.getSignedInUser()?.userId?.let {
+                viewModelScope.launch {
+                    val corpusId = UUID.randomUUID().toString()
+                    corpusRepository.insertCorpus(
+                        Corpus(
+                            id = corpusId, title = "Untitled", creatorUserId = it
                         )
-                        _viewEffect.emit(HomeViewEffect.ViewCorpus(corpusId))
-                    }
+                    )
+                    _viewEffect.emit(HomeViewEffect.ViewCorpus(corpusId))
                 }
+            }
 
             is HomeEvent.ViewCorpus -> viewModelScope.launch {
                 _viewEffect.emit(HomeViewEffect.ViewCorpus(event.corpusId))
@@ -61,10 +58,10 @@ class HomeViewModel @Inject constructor(
                 var selectedItems = _state.value.selectionList
                 var isSelecting = true
                 if (selectedItems.contains(event.corpusId)) {
-                   selectedItems =  selectedItems.minus(event.corpusId)
+                    selectedItems = selectedItems.minus(event.corpusId)
                     isSelecting = selectedItems.isNotEmpty()
                 } else {
-                   selectedItems =  selectedItems.plus(event.corpusId)
+                    selectedItems = selectedItems.plus(event.corpusId)
                 }
                 _state.update {
                     it.copy(isSelecting = isSelecting, selectionList = selectedItems)
@@ -73,8 +70,7 @@ class HomeViewModel @Inject constructor(
 
             HomeEvent.EndSelection -> _state.update {
                 it.copy(
-                    isSelecting = false,
-                    selectionList = emptySet()
+                    isSelecting = false, selectionList = emptySet()
                 )
             }
 

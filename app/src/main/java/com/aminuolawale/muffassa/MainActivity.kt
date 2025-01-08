@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
 import com.aminuolawale.muffassa.presentation.home.HomeEvent
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "sign_in") {
-                        composable(route = "sign_in") {
+                        composable(route = Screen.SignIn.route) {
                             SignInRoute(
                                 applicationContext,
                                 navController,
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                                 googleAuthUiClient
                             )
                         }
-                        composable(route = "profile") {
+                        composable(route = Screen.Profile.route) {
                             ProfileRoute(
                                 applicationContext,
                                 navController,
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                                 googleAuthUiClient
                             )
                         }
-                        composable(route = "home") {
+                        composable(route = Screen.Home.route) {
                             HomeRoute(
                                 navController,
                                 googleAuthUiClient.getSignedInUser(),
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                         composable(
-                            route = "corpus?corpusId={corpusId}",
+                            route = "${Screen.Corpus.route}?corpusId={corpusId}",
                             arguments = listOf(navArgument(name = "corpusId") {
                                 type = NavType.StringType
                                 defaultValue = ""
