@@ -5,6 +5,7 @@ coilNetworkOkhttp = "3.0.4"
 dagger = "2.54"
 daggerCompiler = "2.54"
 firebaseBom = "33.7.0"
+gson = "2.10.1"
 hiltAndroid = "2.54"
 hiltAndroidCompiler = "2.54"
 hiltCompiler = "2.54"
@@ -43,6 +44,7 @@ dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerCompiler" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
