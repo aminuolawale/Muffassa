@@ -68,19 +68,6 @@ fun HomeTopAppBar(
 
 
 
-@Composable
-fun BottomBarTabButton(isActive: Boolean, text: String?, content: @Composable () -> Unit) {
-    Surface(
-        modifier = Modifier.size(80.dp),
-        color = if (isActive) Color.Red else Color.Transparent
-    ) {
-        Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            content()
-            text?.let {
-                Text(text, fontSize = 14.sp)
-            }
-        }
-    }
-}
+
 
 

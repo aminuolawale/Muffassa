@@ -15,6 +15,8 @@ enum class CorpusEditState {
 }
 
 enum class CorpusTab {
+     HOME,
+    QUIZ,
+    SNIPPETS,
     RESOURCES,
-    ARTEFACTS,
 }

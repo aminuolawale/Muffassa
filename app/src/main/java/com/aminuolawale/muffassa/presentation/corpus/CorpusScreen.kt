@@ -20,6 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
+import com.aminuolawale.muffassa.presentation.corpus.home.HomeTab
+import com.aminuolawale.muffassa.presentation.corpus.quiz.QuizTab
+import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesTab
+import com.aminuolawale.muffassa.presentation.corpus.snippets.SnippetsTab
 
 @Composable
 fun CorpusScreen(navController: NavController, viewModel: CorpusViewModel) {
@@ -30,45 +34,13 @@ fun CorpusScreen(navController: NavController, viewModel: CorpusViewModel) {
                     .fillMaxSize()
                     .padding(20.dp, 60.dp, 20.dp, 0.dp)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    TitleArea(
-                        text = state.value.corpus?.title ?: "Untitled",
-                        isEditing = state.value.editState == CorpusEditState.TITLE,
-                        onClick = {
-                            viewModel.onEvent(
-                                CorpusEvent.BeginEdit(
-                                    CorpusEditState.TITLE
-                                )
-                            )
-                        },
-                        onValueChange = { value ->
-                            viewModel.onEvent(
-                                CorpusEvent.TitleChanged(
-                                    value
-                                )
-                            )
-                        })
+                when (state.value.activeTab) {
+                    CorpusTab.HOME -> HomeTab(viewModel)
+                    CorpusTab.QUIZ -> QuizTab()
+                    CorpusTab.SNIPPETS -> SnippetsTab()
+                    CorpusTab.RESOURCES -> ResourcesTab()
+                }
 
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    DescriptionArea(modifier = Modifier.fillMaxWidth(),
-                        text = state.value.corpus?.description ?: "Description",
-                        isEditing = state.value.editState == CorpusEditState.DESCRIPTION,
-                        onClick = { viewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
-                        onValueChange = { viewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                    ContentArea()
-                }
             }
         }
     }
