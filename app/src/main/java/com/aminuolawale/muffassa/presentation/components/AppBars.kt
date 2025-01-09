@@ -2,6 +2,7 @@ package com.aminuolawale.muffassa.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,11 +12,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,8 +29,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,13 +88,37 @@ fun CorpusViewTopAppBar(onNavigationIconClick: () -> Unit) {
 fun CorpusViewBottomAppBar() {
     BottomAppBar {
         Row(
-            modifier = Modifier.fillMaxSize().padding(20.dp, 0.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp, 0.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Quiz")
-            Text("Snippets")
-            Text("Resources")
+            BottomBarTabButton(text= "Quiz", isActive = false) {
+                Icon(Icons.Default.Info, contentDescription = "Quiz")
+
+            }
+            BottomBarTabButton(text = "Snippets", isActive = false) {
+                Icon(Icons.Default.Star, contentDescription = "Snippets")
+            }
+            BottomBarTabButton(text="Resources", isActive = false) {
+                Icon(Icons.Default.Menu, contentDescription = "Resources")
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomBarTabButton(isActive: Boolean, text: String?, content: @Composable () -> Unit) {
+    Surface(
+        modifier = Modifier.size(80.dp),
+        color = if (isActive) Color.Red else Color.Transparent
+    ) {
+        Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            content()
+            text?.let {
+                Text(text, fontSize = 14.sp)
+            }
         }
     }
 }

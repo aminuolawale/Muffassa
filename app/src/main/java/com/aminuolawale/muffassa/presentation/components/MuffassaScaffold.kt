@@ -10,7 +10,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,7 +22,6 @@ fun MuffassaScaffold(
     screen: Screen,
     profilePictureUrl: String? = null,
     showMenuAppBar: Boolean = false,
-    showSearchBar: Boolean = false,
     onClick: () -> Unit = {},
     onHomeFabClick: () -> Unit = {},
     onNavigationIconClick: () -> Unit = {},
@@ -37,7 +35,6 @@ fun MuffassaScaffold(
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
-    rememberModalBottomSheetState(confirmValueChange = { false })
 
     Scaffold(
         modifier = Modifier

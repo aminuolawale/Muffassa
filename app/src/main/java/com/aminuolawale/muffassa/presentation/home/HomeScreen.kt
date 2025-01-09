@@ -15,7 +15,6 @@ fun HomeScreen(navController: NavController, userData: UserData?, homeViewModel:
             screen = Screen.Home,
             profilePictureUrl = userData?.profilePictureUrl,
             showMenuAppBar = it.value.isSelecting,
-            showSearchBar = it.value.isSearching,
             onHomeFabClick = { homeViewModel.onEvent(HomeEvent.NewCorpus) },
             onProfileClick = { navController.navigate(Screen.Profile.route) },
             onSearchClick = {homeViewModel.onEvent(HomeEvent.BeginSearch)},
