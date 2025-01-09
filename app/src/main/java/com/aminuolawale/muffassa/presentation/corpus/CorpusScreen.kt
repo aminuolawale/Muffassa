@@ -27,7 +27,8 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
     corpusViewModel.state.collectAsState().let {
         MuffassaScaffold(screen = Screen.Corpus,
             onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) },
-            onNavigationIconClick = {navController.popBackStack()}) {
+            onNavigationIconClick = { navController.popBackStack() },
+            onCorpusFabClick = {navController.navigate(Screen.NewResource.route)}) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -70,7 +71,7 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                    ContentArea(it.value.activeTab)
+                    ContentArea()
                 }
 
             }
@@ -116,14 +117,6 @@ fun DescriptionArea(
 }
 
 @Composable
-fun ContentArea(activeTab: CorpusTab) {
-    when (activeTab) {
-        CorpusTab.RESOURCES -> {
-            Text("Resources")
-        }
-
-        CorpusTab.ARTEFACTS -> {
-            Text("Artefacts")
-        }
-    }
+fun ContentArea() {
+    Text("Artefacts")
 }

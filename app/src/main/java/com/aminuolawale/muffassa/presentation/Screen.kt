@@ -5,4 +5,5 @@ sealed class Screen(val route: String) {
     data object Profile : Screen(route = "profile")
     data object Home : Screen(route = "home")
     data object Corpus : Screen(route = "corpus")
+    data object NewResource: Screen(route = "new_resource")
 }

@@ -24,6 +24,7 @@ import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeRoute
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
+import com.aminuolawale.muffassa.presentation.newresource.NewResourceRoute
 import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import com.aminuolawale.muffassa.presentation.signin.SignInRoute
 import com.aminuolawale.muffassa.ui.theme.MuffassaTheme
@@ -95,6 +96,9 @@ class MainActivity : AppCompatActivity() {
                                 corpusViewModel,
                                 it.arguments?.getString("corpusId")
                             )
+                        }
+                        composable(route = Screen.NewResource.route) {
+                            NewResourceRoute(navController)
                         }
                     }
                 }

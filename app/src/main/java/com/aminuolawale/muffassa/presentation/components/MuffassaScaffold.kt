@@ -8,7 +8,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -26,12 +25,13 @@ fun MuffassaScaffold(
     showMenuAppBar: Boolean = false,
     showSearchBar: Boolean = false,
     onClick: () -> Unit = {},
-    onFabClick: () -> Unit = {},
+    onHomeFabClick: () -> Unit = {},
     onNavigationIconClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
     onSearchClick: () -> Unit = {},
     onMenuAppBarCancelClick: () -> Unit = {},
     onMenuAppBarDeleteClick: () -> Unit = {},
+    onCorpusFabClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
     val scrollBehavior =
@@ -70,14 +70,25 @@ fun MuffassaScaffold(
 
                 Screen.Profile -> HomeTopAppBar( scrollBehavior)
                 Screen.SignIn -> {}
+                Screen.NewResource -> CorpusViewTopAppBar(onNavigationIconClick)
+            }
+        },
+        bottomBar = {
+            when(screen){
+                Screen.Corpus -> CorpusViewBottomAppBar()
+                Screen.Home -> {}
+                Screen.Profile -> {}
+                Screen.SignIn -> {}
+                Screen.NewResource -> {}
             }
         },
         floatingActionButton = {
             when (screen) {
-                Screen.Corpus -> HomeFAB(onFabClick)
-                Screen.Home -> HomeFAB(onFabClick)
+                Screen.Corpus -> CorpusFAB(onCorpusFabClick)
+                Screen.Home -> HomeFAB(onHomeFabClick)
                 Screen.Profile -> {}
                 Screen.SignIn -> {}
+                Screen.NewResource -> {}
             }
         },
     ) {
