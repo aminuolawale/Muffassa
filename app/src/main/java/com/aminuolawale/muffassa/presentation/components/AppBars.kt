@@ -66,47 +66,7 @@ fun HomeTopAppBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CorpusViewTopAppBar(onNavigationIconClick: () -> Unit) {
-    TopAppBar(
-        modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 0.dp),
-        title = { },
-        navigationIcon = {
-            IconButton(onClick = { onNavigationIconClick() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
-        },
-        scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    )
-}
 
-@Composable
-fun CorpusViewBottomAppBar() {
-    BottomAppBar {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp, 0.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            BottomBarTabButton(text= "Quiz", isActive = false) {
-                Icon(Icons.Default.Info, contentDescription = "Quiz")
-
-            }
-            BottomBarTabButton(text = "Snippets", isActive = false) {
-                Icon(Icons.Default.Star, contentDescription = "Snippets")
-            }
-            BottomBarTabButton(text="Resources", isActive = false) {
-                Icon(Icons.Default.Menu, contentDescription = "Resources")
-            }
-        }
-    }
-}
 
 @Composable
 fun BottomBarTabButton(isActive: Boolean, text: String?, content: @Composable () -> Unit) {

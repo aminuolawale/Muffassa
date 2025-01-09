@@ -19,16 +19,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
+import com.aminuolawale.muffassa.presentation.corpus.components.CorpusViewBottomAppBar
+import com.aminuolawale.muffassa.presentation.corpus.components.CorpusViewTopAppBar
 
 @Composable
-fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel) {
-    corpusViewModel.state.collectAsState().let {
-        MuffassaScaffold(screen = Screen.Corpus,
-            onClick = { corpusViewModel.onEvent(CorpusEvent.EndEdit) },
-            onNavigationIconClick = { navController.popBackStack() },
-            onCorpusFabClick = {navController.navigate(Screen.NewResource.route)}) {
+fun CorpusScreen(navController: NavController, viewModel: CorpusViewModel) {
+    viewModel.state.collectAsState().let { state ->
+        MuffassaScaffold(
+            topBar = { CorpusViewTopAppBar(onNavigationIconClick = { navController.popBackStack() }) },
+            bottomBar = { CorpusViewBottomAppBar() },
+            fab = {},
+            onClick = { viewModel.onEvent(CorpusEvent.EndEdit) },
+        ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -40,17 +44,17 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     TitleArea(
-                        text = it.value.corpus?.title ?: "Untitled",
-                        isEditing = it.value.editState == CorpusEditState.TITLE,
+                        text = state.value.corpus?.title ?: "Untitled",
+                        isEditing = state.value.editState == CorpusEditState.TITLE,
                         onClick = {
-                            corpusViewModel.onEvent(
+                            viewModel.onEvent(
                                 CorpusEvent.BeginEdit(
                                     CorpusEditState.TITLE
                                 )
                             )
                         },
                         onValueChange = { value ->
-                            corpusViewModel.onEvent(
+                            viewModel.onEvent(
                                 CorpusEvent.TitleChanged(
                                     value
                                 )
@@ -64,16 +68,15 @@ fun CorpusScreen(navController: NavController, corpusViewModel: CorpusViewModel)
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     DescriptionArea(modifier = Modifier.fillMaxWidth(),
-                        text = it.value.corpus?.description ?: "Description",
-                        isEditing = it.value.editState == CorpusEditState.DESCRIPTION,
-                        onClick = { corpusViewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
-                        onValueChange = { corpusViewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
+                        text = state.value.corpus?.description ?: "Description",
+                        isEditing = state.value.editState == CorpusEditState.DESCRIPTION,
+                        onClick = { viewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
+                        onValueChange = { viewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                     ContentArea()
                 }
-
             }
         }
     }

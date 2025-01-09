@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
     private val corpusRepository: CorpusRepository,
     private val googleAuthUiClient: GoogleAuthUiClient
 ) : ViewModel() {
-    private var _state = MutableStateFlow(HomeViewState())
+    private var _state = MutableStateFlow(HomeViewState(googleAuthUiClient.getSignedInUser()))
     val state = _state.asStateFlow()
 
     private var _viewEffect = MutableSharedFlow<HomeViewEffect>()
