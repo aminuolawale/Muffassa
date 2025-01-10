@@ -28,14 +28,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
+import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CorpusViewTopAppBar(onNavigationIconClick: () -> Unit) {
+fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Unit) {
     TopAppBar(
         modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 0.dp),
-        title = { },
+        title = {
+            when (state.activeTab) {
+                CorpusTab.HOME -> {}
+                else -> {
+                    Text(state.corpus?.title ?: "")
+                }
+            }
+        },
         navigationIcon = {
             IconButton(onClick = { onNavigationIconClick() }) {
                 Icon(

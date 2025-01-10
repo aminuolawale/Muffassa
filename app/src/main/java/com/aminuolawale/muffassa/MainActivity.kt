@@ -96,15 +96,6 @@ class MainActivity : AppCompatActivity() {
                                 it.arguments?.getString("corpusId")
                             )
                         }
-                        composable(route = Screen.Quiz.route) {
-                            QuizTab()
-                        }
-                        composable(route = Screen.Snippets.route) {
-                            SnippetsTab()
-                        }
-                        composable(route = Screen.Resources.route) {
-                            ResourcesTab()
-                        }
                         composable(route = Screen.NewResource.route) {
                             NewResourceScreen()
                         }
