@@ -20,14 +20,11 @@ import androidx.navigation.navArgument
 import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
-import com.aminuolawale.muffassa.presentation.corpus.quiz.QuizTab
-import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesTab
-import com.aminuolawale.muffassa.presentation.corpus.snippets.SnippetsTab
 import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeScreen
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
-import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
 import com.aminuolawale.muffassa.presentation.newresource.NewResourceScreen
+import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
 import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import com.aminuolawale.muffassa.presentation.signin.SignInRoute
 import com.aminuolawale.muffassa.ui.theme.MuffassaTheme

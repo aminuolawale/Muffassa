@@ -5,10 +5,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
-import com.aminuolawale.muffassa.presentation.components.ResourcesFab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusEvent
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
+import com.aminuolawale.muffassa.presentation.home.components.ResourcesFab
 
 
 @Composable

@@ -7,9 +7,3 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 
 
-@Composable
-fun ResourcesFab(onClick: () -> Unit){
-    FloatingActionButton(onClick =onClick ) {
-        Icon(Icons.Outlined.Edit, contentDescription = "Add new Resource")
-    }
-}
