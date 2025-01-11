@@ -32,7 +32,7 @@ fun CorpusScreen(navController: NavController, viewModel: CorpusViewModel) {
                     CorpusTab.HOME -> HomeTab(viewModel)
                     CorpusTab.QUIZ -> QuizTab()
                     CorpusTab.SNIPPETS -> SnippetsTab()
-                    CorpusTab.RESOURCES -> ResourcesTab()
+                    CorpusTab.RESOURCES -> ResourcesTab(state.value)
                 }
 
             }

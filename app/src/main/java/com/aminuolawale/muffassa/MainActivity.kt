@@ -24,6 +24,7 @@ import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeScreen
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 import com.aminuolawale.muffassa.presentation.newresource.NewResourceScreen
+import com.aminuolawale.muffassa.presentation.newresource.NewResourceViewModel
 import com.aminuolawale.muffassa.presentation.profile.ProfileRoute
 import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import com.aminuolawale.muffassa.presentation.signin.SignInRoute
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val homeViewModel: HomeViewModel by viewModels()
     private val corpusViewModel: CorpusViewModel by viewModels()
+    private val newResourcesViewModel: NewResourceViewModel by viewModels()
     private var callback: OnBackPressedCallback? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +95,18 @@ class MainActivity : AppCompatActivity() {
                                 it.arguments?.getString("corpusId")
                             )
                         }
-                        composable(route = Screen.NewResource.route) {
-                            NewResourceScreen()
+                        composable(
+                            route = "${Screen.NewResource.route}?corpusId={corpusId}",
+                            arguments = listOf(navArgument(name = "corpusId") {
+                                type = NavType.StringType
+                                defaultValue = ""
+                            })
+                        ) {
+                            NewResourceScreen(
+                                navController,
+                                newResourcesViewModel,
+                                it.arguments?.getString("corpusId")
+                            )
                         }
                     }
                 }

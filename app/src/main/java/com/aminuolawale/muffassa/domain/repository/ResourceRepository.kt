@@ -5,7 +5,7 @@ import com.aminuolawale.muffassa.domain.model.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface ResourceRepository {
-    fun getResources(corpusId: String): Flow<Resource>
+    fun getResources(corpusId: String): Flow<List<Resource>>
 
     suspend fun getResource(id: String): Resource?
 

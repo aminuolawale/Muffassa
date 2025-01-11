@@ -14,6 +14,6 @@ abstract class MuffassaDatabase : RoomDatabase() {
     abstract val corpusDao: CorpusDao
     abstract val resourceDao: ResourceDao
     companion object {
-        const val DATABASE_NAME = "muffassa_9"
+        const val DATABASE_NAME = "muffassa_10"
     }
 }

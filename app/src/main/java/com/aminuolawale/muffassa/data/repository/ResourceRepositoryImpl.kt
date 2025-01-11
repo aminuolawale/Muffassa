@@ -6,7 +6,7 @@ import com.aminuolawale.muffassa.domain.repository.ResourceRepository
 import kotlinx.coroutines.flow.Flow
 
 class ResourceRepositoryImpl(private val resourceDao: ResourceDao): ResourceRepository {
-    override fun getResources(corpusId: String): Flow<Resource> {
+    override fun getResources(corpusId: String): Flow<List<Resource>> {
         return resourceDao.getResources(corpusId)
     }
 

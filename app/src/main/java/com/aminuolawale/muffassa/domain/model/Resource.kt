@@ -10,7 +10,7 @@ data class Resource(
     val name: String,
     val description: String,
     val corpusId: String,
-    val data: ResourceData,
+    val data: ResourceData?,
     @ColumnInfo(name = "date_created") val dateCreated: Long = System.currentTimeMillis(),
     @ColumnInfo(name = "last_updated") val lastUpdated: Long = System.currentTimeMillis()
 )

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ResourceDao {
     @Query("SELECT * FROM resource where corpusId = :corpusId")
-    fun getResources(corpusId: String): Flow<Resource>
+    fun getResources(corpusId: String): Flow<List<Resource>>
 
     @Query("SELECT * FROM resource WHERE id = :id")
     suspend fun getResource(id:String): Resource?
