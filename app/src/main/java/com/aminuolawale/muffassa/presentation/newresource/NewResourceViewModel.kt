@@ -40,8 +40,11 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
             }
 
             NewResourceEvent.Save -> {
-                viewModelScope.launch {
-                    _state.value.resource?.let {
+                _state.value.resource?.let {
+                    if (!validateResource(it)){
+                        return@let
+                    }
+                    viewModelScope.launch {
                         resourceRepository.insertResource(it)
                         _viewEffect.emit(NewResourceViewEffect.Saved)
                         reset()
@@ -78,5 +81,34 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
 
     private fun reset() {
         _state.update { NewResourceViewState(resource = getDefaultResource()) }
+    }
+
+    private fun validateResource(resource: Resource): Boolean {
+        if (resource.name.isEmpty()) {
+            _state.update {
+                it.copy(
+                    errors = it.errors.plus(
+                        FormError(
+                            field = FormField.NAME,
+                            message = "Name must not be blank"
+                        )
+                    )
+                )
+            }
+            return false
+        } else if (resource.data == null) {
+            _state.update {
+                it.copy(
+                    errors = it.errors.plus(
+                        FormError(
+                            field = FormField.DATA,
+                            message = "Data must not be blank"
+                        )
+                    )
+                )
+            }
+            return false
+        }
+        return true
     }
 }

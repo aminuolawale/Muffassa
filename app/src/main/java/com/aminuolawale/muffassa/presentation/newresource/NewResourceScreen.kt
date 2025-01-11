@@ -93,6 +93,9 @@ fun NewResourceScreen(
                         label = { Text("Name") },
                         shape = RoundedCornerShape(20.dp),
                     )
+                    state.value.errors.filter { it.field == FormField.NAME }.map {
+                        Text(text = it.message)
+                    }
                     Spacer(modifier = Modifier.height(20.dp))
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
@@ -102,6 +105,9 @@ fun NewResourceScreen(
                         minLines = 2,
                         shape = RoundedCornerShape(20.dp),
                     )
+                    state.value.errors.filter { it.field == FormField.DESCRIPTION }.map {
+                        Text(text = it.message)
+                    }
                     Spacer(modifier = Modifier.height(20.dp))
                     when (state.value.type) {
                         ResourceType.ARTICLE -> {
