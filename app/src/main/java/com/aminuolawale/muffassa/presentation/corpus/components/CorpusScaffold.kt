@@ -1,5 +1,6 @@
 package com.aminuolawale.muffassa.presentation.corpus.components
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
@@ -28,7 +29,12 @@ fun CorpusScaffold(
             },
             fab = {
                 when (state.value.activeTab) {
-                    CorpusTab.RESOURCES -> ResourcesFab(onClick = { navController.navigate(Screen.NewResource.route + "?corpusId=${state.value.corpus?.id}") })
+                    CorpusTab.RESOURCES -> {
+                        val uri = Uri.Builder().path(Screen.NewResource.route)
+                            .appendQueryParameter("corpusId", state.value.corpus?.id).build()
+                        ResourcesFab(onClick = { navController.navigate(uri.toString()) })
+                    }
+
                     else -> {}
                 }
             },

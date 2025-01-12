@@ -1,5 +1,6 @@
 package com.aminuolawale.muffassa.presentation.home
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
@@ -16,8 +17,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             .viewEffect.collectLatest {
                 when (it) {
                     is HomeViewEffect.ViewCorpus -> {
-                        val route = Screen.CorpusHome.route + "?corpusId=${it.corpusId}&activeTab=${CorpusTab.HOME.ordinal}"
-                        navController.navigate(route)
+                        val uri =
+                            Uri.Builder().path(Screen.CorpusHome.route).appendPath(it.corpusId)
+                                .appendQueryParameter("tab", CorpusTab.HOME.ordinal.toString())
+                                .build()
+                        navController.navigate(uri.toString())
                         viewModel.onViewEffectComplete()
                     }
 
