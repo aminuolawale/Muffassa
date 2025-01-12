@@ -17,8 +17,7 @@ fun HomeScaffold(
         screen = Screen.Home,
         navController = navController,
         topBar = { HomeTopAppBar(viewModel, navController) },
-        fab = { HomeFab(onClick = { viewModel.onEvent(HomeEvent.NewCorpus) }) },
-        onClick = {}) {
+        fab = { HomeFab(onClick = { viewModel.onEvent(HomeEvent.NewCorpus) }) }) {
         content()
     }
 }

@@ -15,15 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aminuolawale.muffassa.domain.model.Resource
-import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 import com.aminuolawale.muffassa.presentation.utils.Utils
-
-@Composable
-fun ResourcesTab(state: CorpusViewState) {
-    state.resources.map {
-        ResourceItem(it)
-    }
-}
 
 
 @Composable

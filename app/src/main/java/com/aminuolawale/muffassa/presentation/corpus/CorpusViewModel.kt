@@ -5,9 +5,10 @@ import androidx.compose.material3.DrawerValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
-import com.aminuolawale.muffassa.domain.repository.ResourceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -16,20 +17,21 @@ import javax.inject.Inject
 @HiltViewModel
 class CorpusViewModel @Inject constructor(
     private val corpusRepository: CorpusRepository,
-    private val resourceRepository: ResourceRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(CorpusViewState())
     val state = _state.asStateFlow()
 
-    fun initialize(corpusId: String?, tab: Int?) {
-        val activeTab = tab?.let { CorpusTab.entries[it] } ?: CorpusTab.HOME
+    private var _viewEffect = MutableSharedFlow<CorpusViewEffect>()
+    val viewEffect = _viewEffect.asSharedFlow()
+
+    fun initialize(corpusId: String?) {
+        if (state.value.corpus != null) {
+            return
+        }
         corpusId?.let {
             viewModelScope.launch {
                 val corpus = corpusRepository.getCorpus(it)
-                _state.update { it.copy(corpus = corpus, activeTab = activeTab) }
-                resourceRepository.getResources(it).collect { resourceList ->
-                    _state.update { it.copy(resources = resourceList) }
-                }
+                _state.update { it.copy(corpus = corpus, activeTab = CorpusTab.HOME) }
             }
         }
     }
@@ -61,9 +63,13 @@ class CorpusViewModel @Inject constructor(
 
             is CorpusEvent.SelectTab -> {
                 _state.update { it.copy(activeTab = corpusEvent.tab) }
+                viewModelScope.launch {
+                    _viewEffect.emit(CorpusViewEffect.SelectTab(corpusEvent.tab))
+                    _viewEffect.emit(CorpusViewEffect.NoViewEffect)
+                }
             }
 
-            CorpusEvent.OpenNavDrawer -> {
+            CorpusEvent.NavDrawer -> {
                 _state.update {
                     it.copy(
                         drawerState = if (it.drawerState.isOpen) DrawerState(

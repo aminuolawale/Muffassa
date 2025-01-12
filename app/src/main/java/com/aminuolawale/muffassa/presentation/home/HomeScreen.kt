@@ -19,10 +19,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
                     is HomeViewEffect.ViewCorpus -> {
                         val uri =
                             Uri.Builder().path(Screen.CorpusHome.route).appendPath(it.corpusId)
-                                .appendQueryParameter("tab", CorpusTab.HOME.ordinal.toString())
+                                .appendPath("home")
                                 .build()
                         navController.navigate(uri.toString())
-                        viewModel.onViewEffectComplete()
                     }
 
                     HomeViewEffect.NoViewEffect -> {}

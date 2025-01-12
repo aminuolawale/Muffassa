@@ -1,33 +1,33 @@
 package com.aminuolawale.muffassa.presentation.corpus
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.aminuolawale.muffassa.presentation.corpus.components.CorpusNavigationDrawer
 import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
-import com.aminuolawale.muffassa.presentation.corpus.home.HomeTab
-import com.aminuolawale.muffassa.presentation.corpus.quiz.QuizTab
-import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesTab
-import com.aminuolawale.muffassa.presentation.corpus.snippets.SnippetsTab
 
 @Composable
 fun CorpusScreen(
     navController: NavController,
     viewModel: CorpusViewModel,
     corpusId: String?,
-    tab: Int?
 ) {
-    viewModel.initialize(corpusId, tab)
+    viewModel.initialize(corpusId)
     viewModel.state.collectAsState().let { state ->
         CorpusScaffold(navController, viewModel) {
             Column(
@@ -35,12 +35,49 @@ fun CorpusScreen(
                     .fillMaxSize()
                     .padding(20.dp, 60.dp, 20.dp, 0.dp)
             ) {
-                when (state.value.activeTab) {
-                    CorpusTab.HOME -> HomeTab(viewModel)
-                    CorpusTab.QUIZ -> QuizTab()
-                    CorpusTab.SNIPPETS -> SnippetsTab()
-                    CorpusTab.RESOURCES -> ResourcesTab(state.value)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TitleArea(
+                        text = state.value.corpus?.title ?: "Untitled",
+                        isEditing = state.value.editState == CorpusEditState.TITLE,
+                        onClick = {
+                            viewModel.onEvent(
+                                CorpusEvent.BeginEdit(
+                                    CorpusEditState.TITLE
+                                )
+                            )
+                        },
+                        onValueChange = { value ->
+                            viewModel.onEvent(
+                                CorpusEvent.TitleChanged(
+                                    value
+                                )
+                            )
+                        })
+
                 }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DescriptionArea(modifier = Modifier.fillMaxWidth(),
+                        text = state.value.corpus?.description ?: "Description",
+                        isEditing = state.value.editState == CorpusEditState.DESCRIPTION,
+                        onClick = { viewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
+                        onValueChange = { viewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    ContentArea()
+                }
+
 
             }
         }

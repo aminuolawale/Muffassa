@@ -9,41 +9,45 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aminuolawale.muffassa.domain.model.Corpus
+import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 
 
 @Composable
-fun CorpusNavigationDrawer(state: CorpusViewState) {
-    rememberCoroutineScope()
+fun CorpusNavigationDrawer(
+    state: CorpusViewState,
+    onHomeClick: () -> Unit,
+    onResourcesClick: () -> Unit
+) {
     ModalNavigationDrawer(drawerState = state.drawerState, drawerContent = {
         ModalDrawerSheet {
-        Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(80.dp))
             Text("Muffassa", fontSize = 24.sp, modifier = Modifier.padding(16.dp))
             HorizontalDivider()
             NavigationDrawerItem(
-                label = { Text(text = state.corpus?.title?:"") },
-                selected = false,
-                onClick = { /*TODO*/ }
+                label = { Text(text = state.corpus?.title ?: "") },
+                selected = state.activeTab == CorpusTab.HOME,
+                onClick = onHomeClick
             )
             HorizontalDivider()
             NavigationDrawerItem(
                 label = { Text("Quiz") },
-                selected = false,
+                selected = state.activeTab == CorpusTab.QUIZ,
                 onClick = { /*TODO*/ }
             )
             NavigationDrawerItem(
                 label = { Text(text = "Snippets") },
-                selected = false,
+                selected = state.activeTab == CorpusTab.SNIPPETS,
                 onClick = { /*TODO*/ }
             )
             NavigationDrawerItem(
                 label = { Text(text = "Resources") },
-                selected = false,
-                onClick = { /*TODO*/ }
+                selected = state.activeTab == CorpusTab.RESOURCES,
+                onClick = onResourcesClick
             )
         }
     }) {

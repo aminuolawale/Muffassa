@@ -3,17 +3,9 @@ package com.aminuolawale.muffassa.presentation.corpus.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -53,52 +45,6 @@ fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Uni
         },
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     )
-}
-
-@Composable
-fun CorpusViewBottomAppBar(
-    activeTab: CorpusTab = CorpusTab.HOME,
-    onButtonClick: (CorpusTab) -> Unit,
-) {
-    BottomAppBar {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp, 0.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            BottomBarTabButton(
-                text = "Home",
-                isActive = activeTab == CorpusTab.HOME,
-                onClick = { onButtonClick(CorpusTab.HOME) }) {
-                Icon(Icons.Default.Home, contentDescription = "Home")
-            }
-            BottomBarTabButton(
-                text = "Quiz",
-                isActive = activeTab == CorpusTab.QUIZ,
-                onClick = { onButtonClick(CorpusTab.QUIZ) }
-            ) {
-                Icon(Icons.Default.Info, contentDescription = "Quiz")
-
-            }
-            BottomBarTabButton(
-                text = "Snippets",
-                isActive = activeTab == CorpusTab.SNIPPETS,
-                onClick = { onButtonClick(CorpusTab.SNIPPETS) }
-            ) {
-                Icon(Icons.Default.Star, contentDescription = "Snippets")
-            }
-            BottomBarTabButton(
-                text = "Resources",
-                isActive = activeTab == CorpusTab.RESOURCES,
-                onClick = { onButtonClick(CorpusTab.RESOURCES) }
-            ) {
-                Icon(Icons.Default.Menu, contentDescription = "Resources")
-            }
-
-        }
-    }
 }
 
 @Composable

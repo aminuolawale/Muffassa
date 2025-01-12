@@ -25,8 +25,7 @@ fun NewResourceScaffold(
             NewResourceFab(onClick = {
                 viewModel.onEvent(NewResourceEvent.Save)
             })
-        },
-        onClick = {}) {
+        }) {
         content()
     }
 }
