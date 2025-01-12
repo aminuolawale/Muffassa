@@ -16,6 +16,7 @@ import com.aminuolawale.muffassa.domain.model.ResourceData
 import com.aminuolawale.muffassa.domain.model.ResourceType
 import com.aminuolawale.muffassa.presentation.newresource.components.DescriptionField
 import com.aminuolawale.muffassa.presentation.newresource.components.NameField
+import com.aminuolawale.muffassa.presentation.newresource.components.NewResourceScaffold
 import com.aminuolawale.muffassa.presentation.newresource.components.NoteDataField
 import com.aminuolawale.muffassa.presentation.newresource.components.ResourceTypeSelector
 import kotlinx.coroutines.flow.collectLatest

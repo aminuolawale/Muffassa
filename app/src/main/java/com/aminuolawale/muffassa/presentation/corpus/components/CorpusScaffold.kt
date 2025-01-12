@@ -9,7 +9,7 @@ import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 import com.aminuolawale.muffassa.presentation.corpus.CorpusEvent
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
-import com.aminuolawale.muffassa.presentation.home.components.ResourcesFab
+import com.aminuolawale.muffassa.presentation.newresource.components.ResourcesFab
 
 
 @Composable

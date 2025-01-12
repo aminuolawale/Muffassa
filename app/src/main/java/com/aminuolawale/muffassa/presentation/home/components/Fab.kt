@@ -13,11 +13,3 @@ fun HomeFab(onClick: () -> Unit) {
         Icon(Icons.Outlined.Add, contentDescription = "Add")
     }
 }
-
-
-@Composable
-fun ResourcesFab(onClick: () -> Unit){
-    FloatingActionButton(onClick =onClick ) {
-        Icon(Icons.Outlined.Edit, contentDescription = "Add new Resource")
-    }
-}
