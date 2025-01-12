@@ -6,7 +6,7 @@ import com.aminuolawale.muffassa.domain.model.ResourceType
 data class NewResourceViewState(
     val resource: Resource? = null,
     val type: ResourceType = ResourceType.NOTE,
-    val errors : List<FormError> = emptyList(),
+    val errors: Map<FormField, List<String>> = mapOf(),
 )
 
 data class FormError(
@@ -14,7 +14,7 @@ data class FormError(
     val message: String
 )
 
-enum class FormField  {
+enum class FormField {
     NAME,
     DESCRIPTION,
     DATA,

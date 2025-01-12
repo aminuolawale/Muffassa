@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.model.Resource
 import com.aminuolawale.muffassa.domain.repository.ResourceRepository
+import com.aminuolawale.muffassa.presentation.newresource.utils.ResourceValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,15 +41,16 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
             }
 
             NewResourceEvent.Save -> {
-                _state.value.resource?.let {
-                    if (!validateResource(it)){
-                        return@let
-                    }
-                    viewModelScope.launch {
-                        resourceRepository.insertResource(it)
-                        _viewEffect.emit(NewResourceViewEffect.Saved)
-                        reset()
-
+                _state.value.resource?.let { resource ->
+                    val resourceValidator = ResourceValidator(resource)
+                    if (!resourceValidator.validate()) {
+                        _state.update { it.copy(errors = resourceValidator.errors) }
+                    } else {
+                        viewModelScope.launch {
+                            resourceRepository.insertResource(resource)
+                            _viewEffect.emit(NewResourceViewEffect.Saved)
+                            reset()
+                        }
                     }
                 }
             }
@@ -63,6 +65,10 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
 
             is NewResourceEvent.ResourceDataChanged -> {
                 _state.update { it.copy(resource = it.resource?.copy(data = newResourceEvent.resourceData)) }
+            }
+
+            is NewResourceEvent.FormFieldFocusChanged -> {
+                _state.update { it.copy(errors = mapOf()) }
             }
         }
     }
@@ -83,32 +89,4 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
         _state.update { NewResourceViewState(resource = getDefaultResource()) }
     }
 
-    private fun validateResource(resource: Resource): Boolean {
-        if (resource.name.isEmpty()) {
-            _state.update {
-                it.copy(
-                    errors = it.errors.plus(
-                        FormError(
-                            field = FormField.NAME,
-                            message = "Name must not be blank"
-                        )
-                    )
-                )
-            }
-            return false
-        } else if (resource.data == null) {
-            _state.update {
-                it.copy(
-                    errors = it.errors.plus(
-                        FormError(
-                            field = FormField.DATA,
-                            message = "Data must not be blank"
-                        )
-                    )
-                )
-            }
-            return false
-        }
-        return true
-    }
 }

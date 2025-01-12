@@ -1,16 +1,10 @@
 package com.aminuolawale.muffassa.presentation.newresource
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -20,6 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.domain.model.ResourceData
 import com.aminuolawale.muffassa.domain.model.ResourceType
+import com.aminuolawale.muffassa.presentation.newresource.components.DescriptionField
+import com.aminuolawale.muffassa.presentation.newresource.components.NameField
+import com.aminuolawale.muffassa.presentation.newresource.components.NoteDataField
+import com.aminuolawale.muffassa.presentation.newresource.components.ResourceTypeSelector
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -48,72 +46,43 @@ fun NewResourceScreen(
                         .padding(20.dp, 120.dp, 20.dp, 0.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            RadioButton(
-                                selected = state.value.type == ResourceType.NOTE,
-                                onClick = {
-                                    viewModel.onEvent(
-                                        NewResourceEvent.SwitchResourceType(
-                                            ResourceType.NOTE
-                                        )
-                                    )
-                                })
-                            Text("Note")
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            RadioButton(
-                                selected = state.value.type == ResourceType.ARTICLE,
-                                onClick = {
-                                    viewModel.onEvent(
-                                        NewResourceEvent.SwitchResourceType(
-                                            ResourceType.ARTICLE
-                                        )
-                                    )
-                                })
-                            Text("Article")
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            RadioButton(
-                                selected = state.value.type == ResourceType.FILE,
-                                onClick = {
-                                    viewModel.onEvent(
-                                        NewResourceEvent.SwitchResourceType(
-                                            ResourceType.FILE
-                                        )
-                                    )
-                                })
-                            Text("File")
-                        }
-                    }
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = state.value.resource?.name ?: "",
+                    ResourceTypeSelector(state = state.value, onNoteClick = {
+                        viewModel.onEvent(
+                            NewResourceEvent.SwitchResourceType(
+                                ResourceType.NOTE
+                            )
+                        )
+                    }, onFileClick = {
+                        viewModel.onEvent(
+                            NewResourceEvent.SwitchResourceType(
+                                ResourceType.FILE
+                            )
+                        )
+                    }, onArticleClick = {
+                        viewModel.onEvent(
+                            NewResourceEvent.SwitchResourceType(
+                                ResourceType.ARTICLE
+                            )
+                        )
+                    })
+
+                    NameField(
+                        state = state.value,
                         onValueChange = { viewModel.onEvent(NewResourceEvent.NameChanged(it)) },
-                        label = { Text("Name") },
-                        shape = RoundedCornerShape(20.dp),
-                    )
-                    state.value.errors.filter { it.field == FormField.NAME }.map {
-                        Text(text = it.message)
-                    }
+                        onFocusChange = {
+                            viewModel.onEvent(
+                                NewResourceEvent.FormFieldFocusChanged(it)
+                            )
+                        })
+
                     Spacer(modifier = Modifier.height(20.dp))
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = state.value.resource?.description ?: "",
-                        onValueChange = { viewModel.onEvent(NewResourceEvent.DescriptionChanged(it)) },
-                        label = { Text("Description") },
-                        minLines = 2,
-                        shape = RoundedCornerShape(20.dp),
-                    )
-                    state.value.errors.filter { it.field == FormField.DESCRIPTION }.map {
-                        Text(text = it.message)
-                    }
+                    DescriptionField(
+                        state = state.value,
+                        onValueChange = { viewModel.onEvent(NewResourceEvent.DescriptionChanged(it)) })
                     Spacer(modifier = Modifier.height(20.dp))
+
                     when (state.value.type) {
-                        ResourceType.ARTICLE -> {
-
-                        }
-
+                        ResourceType.ARTICLE -> {}
                         ResourceType.FILE -> {
                             DocumentPicker(onFileSelected = {
                                 viewModel.onEvent(
@@ -125,21 +94,22 @@ fun NewResourceScreen(
                         }
 
                         ResourceType.NOTE -> {
-                            OutlinedTextField(
-                                modifier = Modifier.fillMaxWidth(),
-                                value = state.value.resource?.data?.value ?: "",
-                                onValueChange = {
+                            NoteDataField(
+                                state = state.value,
+                                onChange = {
                                     viewModel.onEvent(
                                         NewResourceEvent.ResourceDataChanged(
                                             ResourceData(type = state.value.type, value = it)
                                         )
                                     )
                                 },
-                                label = { Text("Note") },
-                                minLines = 5,
-                                shape = RoundedCornerShape(20.dp),
-                            )
+                                onFocusChange = {
+                                    viewModel.onEvent(
+                                        NewResourceEvent.FormFieldFocusChanged(it)
+                                    )
+                                })
                         }
+
                     }
                 }
             }
