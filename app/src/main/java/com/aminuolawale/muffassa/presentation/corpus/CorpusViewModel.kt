@@ -7,7 +7,6 @@ import com.aminuolawale.muffassa.domain.repository.ResourceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,11 +19,12 @@ class CorpusViewModel @Inject constructor(
     private val _state = MutableStateFlow(CorpusViewState())
     val state = _state.asStateFlow()
 
-    fun initialize(corpusId: String?) {
+    fun initialize(corpusId: String?, tab: Int?) {
+        val activeTab = tab?.let { CorpusTab.entries[it] }?:CorpusTab.HOME
         corpusId?.let {
             viewModelScope.launch {
                 val corpus = corpusRepository.getCorpus(it)
-                _state.update { it.copy(corpus = corpus) }
+                _state.update { it.copy(corpus = corpus, activeTab = activeTab) }
                 resourceRepository.getResources(it).collect { resourceList ->
                     _state.update { it.copy(resources = resourceList) }
                 }

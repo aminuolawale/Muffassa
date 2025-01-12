@@ -14,26 +14,27 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.domain.model.ResourceData
 import com.aminuolawale.muffassa.domain.model.ResourceType
+import com.aminuolawale.muffassa.presentation.Screen
+import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.newresource.components.DescriptionField
 import com.aminuolawale.muffassa.presentation.newresource.components.NameField
 import com.aminuolawale.muffassa.presentation.newresource.components.NewResourceScaffold
 import com.aminuolawale.muffassa.presentation.newresource.components.NoteDataField
 import com.aminuolawale.muffassa.presentation.newresource.components.ResourceTypeSelector
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 
 @Composable
 fun NewResourceScreen(
     navController: NavController,
     viewModel: NewResourceViewModel,
-    corpusId: String?
+    corpusId: String?,
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.viewEffect.collectLatest {
-            when (it) {
+        viewModel.viewEffect.collectLatest { viewEffect ->
+            when (viewEffect) {
                 NewResourceViewEffect.NoViewEffect -> {}
-                NewResourceViewEffect.Saved -> {
-                    navController.popBackStack()
-                }
+                is NewResourceViewEffect.Saved -> navController.navigate(Screen.Corpus.route + "?corpusId=${viewEffect.resource.corpusId}&activeTab=${CorpusTab.RESOURCES.ordinal}")
             }
         }
     }

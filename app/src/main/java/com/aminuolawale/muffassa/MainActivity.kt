@@ -18,7 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.aminuolawale.muffassa.presentation.Screen
-import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
+import com.aminuolawale.muffassa.presentation.corpus.CorpusScreen
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
 import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeScreen
@@ -81,18 +81,21 @@ class MainActivity : AppCompatActivity() {
                             HomeScreen(navController, homeViewModel)
                         }
                         composable(
-                            route = "${Screen.Corpus.route}?corpusId={corpusId}",
+                            route = "${Screen.Corpus.route}?corpusId={corpusId}&activeTab={activeTab}",
                             arguments = listOf(navArgument(name = "corpusId") {
                                 type = NavType.StringType
                                 defaultValue = ""
 
+                            }, navArgument(name = "activeTab") {
+                                type = NavType.IntType
+                                defaultValue = 0
                             })
                         ) {
-
-                            CorpusRoute(
+                            CorpusScreen(
                                 navController,
                                 corpusViewModel,
-                                it.arguments?.getString("corpusId")
+                                it.arguments?.getString("corpusId"),
+                                it.arguments?.getInt("activeTab")
                             )
                         }
                         composable(

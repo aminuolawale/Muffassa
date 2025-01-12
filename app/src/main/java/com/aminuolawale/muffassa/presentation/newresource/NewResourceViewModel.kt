@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.model.Resource
 import com.aminuolawale.muffassa.domain.repository.ResourceRepository
+import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.newresource.utils.ResourceValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -48,7 +49,7 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
                     } else {
                         viewModelScope.launch {
                             resourceRepository.insertResource(resource)
-                            _viewEffect.emit(NewResourceViewEffect.Saved)
+                            _viewEffect.emit(NewResourceViewEffect.Saved(resource))
                             reset()
                         }
                     }

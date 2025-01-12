@@ -20,7 +20,13 @@ import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesTab
 import com.aminuolawale.muffassa.presentation.corpus.snippets.SnippetsTab
 
 @Composable
-fun CorpusScreen(navController: NavController, viewModel: CorpusViewModel) {
+fun CorpusScreen(
+    navController: NavController,
+    viewModel: CorpusViewModel,
+    corpusId: String?,
+    tab: Int?
+) {
+    viewModel.initialize(corpusId, tab)
     viewModel.state.collectAsState().let { state ->
         CorpusScaffold(navController, viewModel) {
             Column(
