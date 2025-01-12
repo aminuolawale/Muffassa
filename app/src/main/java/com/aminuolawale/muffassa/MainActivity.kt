@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                             HomeScreen(navController, homeViewModel)
                         }
                         composable(
-                            route = "${Screen.Corpus.route}?corpusId={corpusId}&activeTab={activeTab}",
+                            route = "${Screen.CorpusHome.route}?corpusId={corpusId}&activeTab={activeTab}",
                             arguments = listOf(navArgument(name = "corpusId") {
                                 type = NavType.StringType
                                 defaultValue = ""

@@ -6,4 +6,5 @@ sealed class CorpusEvent {
     data class DescriptionChanged(val value: String): CorpusEvent()
     data object EndEdit: CorpusEvent()
     data class SelectTab(val tab: CorpusTab):CorpusEvent()
+    data object OpenNavDrawer: CorpusEvent()
 }

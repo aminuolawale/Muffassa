@@ -13,6 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aminuolawale.muffassa.presentation.corpus.components.CorpusNavigationDrawer
 import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
 import com.aminuolawale.muffassa.presentation.corpus.home.HomeTab
 import com.aminuolawale.muffassa.presentation.corpus.quiz.QuizTab

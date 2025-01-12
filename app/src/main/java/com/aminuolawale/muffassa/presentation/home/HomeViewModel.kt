@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
             HomeEvent.NewCorpus -> googleAuthUiClient.getSignedInUser()?.userId?.let {
                 viewModelScope.launch {
                     val corpusId = UUID.randomUUID().toString()
-                    corpusRepository.insertCorpus(
+                   val u =  corpusRepository.insertCorpus(
                         Corpus(
                             id = corpusId, title = "Untitled", creatorUserId = it
                         )

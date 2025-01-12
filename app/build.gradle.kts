@@ -102,6 +102,7 @@ dependencies {
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.fragment)
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // Room
     implementation(libs.androidx.room.common)

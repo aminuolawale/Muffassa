@@ -22,7 +22,6 @@ import com.aminuolawale.muffassa.presentation.newresource.components.NewResource
 import com.aminuolawale.muffassa.presentation.newresource.components.NoteDataField
 import com.aminuolawale.muffassa.presentation.newresource.components.ResourceTypeSelector
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 
 @Composable
 fun NewResourceScreen(
@@ -34,7 +33,7 @@ fun NewResourceScreen(
         viewModel.viewEffect.collectLatest { viewEffect ->
             when (viewEffect) {
                 NewResourceViewEffect.NoViewEffect -> {}
-                is NewResourceViewEffect.Saved -> navController.navigate(Screen.Corpus.route + "?corpusId=${viewEffect.resource.corpusId}&activeTab=${CorpusTab.RESOURCES.ordinal}")
+                is NewResourceViewEffect.Saved -> navController.navigate(Screen.CorpusHome.route + "?corpusId=${viewEffect.resource.corpusId}&activeTab=${CorpusTab.RESOURCES.ordinal}")
             }
         }
     }

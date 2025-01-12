@@ -1,31 +1,34 @@
 package com.aminuolawale.muffassa.presentation.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.aminuolawale.muffassa.presentation.Screen
+import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MuffassaScaffold(
+    screen: Screen,
+    navController: NavController,
     topBar: @Composable () -> Unit,
-    bottomBar: @Composable () -> Unit,
-    // all screens should have fab
     fab: @Composable () -> Unit,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val homeViewModel: HomeViewModel = hiltViewModel()
     Scaffold(
         modifier = Modifier
             .clickable { onClick() },
         topBar = topBar,
-        bottomBar = bottomBar,
+        bottomBar = {
+            MainAppBar(screen, homeViewModel.state.value.userData?.profilePictureUrl) {
+                navController.navigate(it)
+            }
+        },
         floatingActionButton = fab
     ) {
         content()

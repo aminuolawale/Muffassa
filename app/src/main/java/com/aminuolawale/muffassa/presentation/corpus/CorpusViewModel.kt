@@ -1,5 +1,7 @@
 package com.aminuolawale.muffassa.presentation.corpus
 
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
@@ -20,7 +22,7 @@ class CorpusViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun initialize(corpusId: String?, tab: Int?) {
-        val activeTab = tab?.let { CorpusTab.entries[it] }?:CorpusTab.HOME
+        val activeTab = tab?.let { CorpusTab.entries[it] } ?: CorpusTab.HOME
         corpusId?.let {
             viewModelScope.launch {
                 val corpus = corpusRepository.getCorpus(it)
@@ -59,6 +61,16 @@ class CorpusViewModel @Inject constructor(
 
             is CorpusEvent.SelectTab -> {
                 _state.update { it.copy(activeTab = corpusEvent.tab) }
+            }
+
+            CorpusEvent.OpenNavDrawer -> {
+                _state.update {
+                    it.copy(
+                        drawerState = if (it.drawerState.isOpen) DrawerState(
+                            DrawerValue.Closed
+                        ) else DrawerState(DrawerValue.Open)
+                    )
+                }
             }
         }
     }

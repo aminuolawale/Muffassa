@@ -35,7 +35,6 @@ import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 @Composable
 fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Unit) {
     TopAppBar(
-        modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 0.dp),
         title = {
             when (state.activeTab) {
                 CorpusTab.HOME -> {}
@@ -47,7 +46,7 @@ fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Uni
         navigationIcon = {
             IconButton(onClick = { onNavigationIconClick() }) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                    imageVector = Icons.Default.Menu,
                     contentDescription = "Back"
                 )
             }
@@ -113,7 +112,7 @@ fun BottomBarTabButton(
         modifier = Modifier
             .size(80.dp)
             .clickable { onClick() },
-        color = if (isActive) Color.Red else Color.Transparent
+        color = if (isActive) Color.LightGray else Color.Transparent
     ) {
         Column(
             verticalArrangement = Arrangement.Center,

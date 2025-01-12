@@ -3,6 +3,8 @@ package com.aminuolawale.muffassa.presentation.home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
+import com.aminuolawale.muffassa.presentation.Screen
+import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.home.components.CorpusGrid
 import com.aminuolawale.muffassa.presentation.home.components.HomeScaffold
 import kotlinx.coroutines.flow.collectLatest
@@ -14,7 +16,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             .viewEffect.collectLatest {
                 when (it) {
                     is HomeViewEffect.ViewCorpus -> {
-                        navController.navigate("corpus?corpusId=${it.corpusId}")
+                        val route = Screen.CorpusHome.route + "?corpusId=${it.corpusId}&activeTab=${CorpusTab.HOME.ordinal}"
+                        navController.navigate(route)
                         viewModel.onViewEffectComplete()
                     }
 
@@ -22,7 +25,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
                 }
             }
     }
-    HomeScaffold(viewModel = viewModel, navController = navController){
+    HomeScaffold(viewModel = viewModel, navController = navController) {
         CorpusGrid(viewModel)
 
     }
