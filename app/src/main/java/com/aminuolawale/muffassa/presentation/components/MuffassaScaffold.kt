@@ -15,15 +15,14 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 fun MuffassaScaffold(
     topBar: @Composable () -> Unit,
     bottomBar: @Composable () -> Unit,
+    // all screens should have fab
     fab: @Composable () -> Unit,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
             .clickable { onClick() },
         topBar = topBar,
         bottomBar = bottomBar,
