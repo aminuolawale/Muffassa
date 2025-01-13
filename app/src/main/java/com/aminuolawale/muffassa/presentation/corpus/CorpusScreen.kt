@@ -25,9 +25,7 @@ import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
 fun CorpusScreen(
     navController: NavController,
     viewModel: CorpusViewModel,
-    corpusId: String?,
 ) {
-    viewModel.initialize(corpusId)
     viewModel.state.collectAsState().let { state ->
         CorpusScaffold(navController, viewModel) {
             Column(

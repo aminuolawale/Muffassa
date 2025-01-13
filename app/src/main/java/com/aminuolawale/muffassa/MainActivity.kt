@@ -15,9 +15,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.aminuolawale.muffassa.presentation.Screen
+import com.aminuolawale.muffassa.presentation.corpus.CorpusRoute
 import com.aminuolawale.muffassa.presentation.corpus.CorpusScreen
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
 import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesScreen
@@ -82,29 +84,49 @@ class MainActivity : AppCompatActivity() {
                             HomeScreen(navController, homeViewModel)
                         }
                         composable(
-                            route = "${Screen.CorpusHome.route}/{corpusId}/home",
+                            route = "${Screen.CorpusHome.route}/{corpusId}/{tab}",
                             arguments = listOf(navArgument(name = "corpusId") {
+                                type = NavType.StringType
+                                defaultValue = ""
+
+                            }, navArgument(name = "tab") {
                                 type = NavType.StringType
                                 defaultValue = ""
 
                             })
                         ) {
-                            CorpusScreen(
+                            CorpusRoute(
                                 navController,
                                 corpusViewModel,
                                 it.arguments?.getString("corpusId"),
+                                it.arguments?.getString("tab")
                             )
-                        }
-                        composable(
-                            route = "${Screen.CorpusHome.route}/{corpusId}/resources",
-                            arguments = listOf(navArgument(name = "corpusId") {
-                                type = NavType.StringType
-                                defaultValue = ""
 
-                            })
-                        ) {
-                            ResourcesScreen(navController, corpusViewModel)
                         }
+//                        composable(
+//                            route = "${Screen.CorpusHome.route}/{corpusId}/home",
+//                            arguments = listOf(navArgument(name = "corpusId") {
+//                                type = NavType.StringType
+//                                defaultValue = ""
+//
+//                            })
+//                        ) {
+//                            CorpusScreen(
+//                                navController,
+//                                corpusViewModel,
+//                                it.arguments?.getString("corpusId"),
+//                            )
+//                        }
+//                        composable(
+//                            route = "${Screen.CorpusHome.route}/{corpusId}/resources",
+//                            arguments = listOf(navArgument(name = "corpusId") {
+//                                type = NavType.StringType
+//                                defaultValue = ""
+//
+//                            })
+//                        ) {
+//                            ResourcesScreen(navController, corpusViewModel)
+//                        }
                         composable(
                             route = "${Screen.NewResource.route}?corpusId={corpusId}",
                             arguments = listOf(navArgument(name = "corpusId") {

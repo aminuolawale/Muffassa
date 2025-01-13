@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,15 +19,10 @@ class CorpusViewModel @Inject constructor(
     private val _state = MutableStateFlow(CorpusViewState())
     val state = _state.asStateFlow()
 
-    private var _viewEffect = MutableSharedFlow<CorpusViewEffect>()
-    val viewEffect = _viewEffect.asSharedFlow()
-
-    fun initialize(corpusId: String?) {
-        corpusId?.let {
-            viewModelScope.launch {
-                val corpus = corpusRepository.getCorpus(it)
-                _state.update { it.copy(corpus = corpus) }
-            }
+    fun initialize(corpusId: String, corpusTab: CorpusTab) {
+        viewModelScope.launch {
+            val corpus = corpusRepository.getCorpus(corpusId)
+            _state.update { it.copy(corpus = corpus, activeTab = corpusTab) }
         }
     }
 
@@ -58,21 +51,19 @@ class CorpusViewModel @Inject constructor(
                 _state.update { it.copy(corpus = it.corpus?.copy(description = corpusEvent.value)) }
             }
 
-            is CorpusEvent.SelectTab -> {
-                _state.update { it.copy(activeTab = corpusEvent.tab) }
-                viewModelScope.launch {
-                    _viewEffect.emit(CorpusViewEffect.SelectTab(corpusEvent.tab))
-                    _viewEffect.emit(CorpusViewEffect.NoViewEffect)
-                }
-            }
-
-            CorpusEvent.NavDrawer -> {
+            CorpusEvent.ToggleNavDrawer -> {
                 _state.update {
                     it.copy(
                         drawerState = if (it.drawerState.isOpen) DrawerState(
                             DrawerValue.Closed
                         ) else DrawerState(DrawerValue.Open)
                     )
+                }
+            }
+
+            is CorpusEvent.NavDrawer -> {
+                _state.update {
+                    it.copy(drawerState = DrawerState(if (corpusEvent.open) DrawerValue.Open else DrawerValue.Closed))
                 }
             }
         }
