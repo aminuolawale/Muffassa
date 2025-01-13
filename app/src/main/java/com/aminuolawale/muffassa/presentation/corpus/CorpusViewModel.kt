@@ -25,13 +25,10 @@ class CorpusViewModel @Inject constructor(
     val viewEffect = _viewEffect.asSharedFlow()
 
     fun initialize(corpusId: String?) {
-        if (state.value.corpus != null) {
-            return
-        }
         corpusId?.let {
             viewModelScope.launch {
                 val corpus = corpusRepository.getCorpus(it)
-                _state.update { it.copy(corpus = corpus, activeTab = CorpusTab.HOME) }
+                _state.update { it.copy(corpus = corpus) }
             }
         }
     }

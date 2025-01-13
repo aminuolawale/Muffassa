@@ -87,9 +87,6 @@ class MainActivity : AppCompatActivity() {
                                 type = NavType.StringType
                                 defaultValue = ""
 
-                            }, navArgument(name = "tab") {
-                                type = NavType.IntType
-                                defaultValue = 0
                             })
                         ) {
                             CorpusScreen(

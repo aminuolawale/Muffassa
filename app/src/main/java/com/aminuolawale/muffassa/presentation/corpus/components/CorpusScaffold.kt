@@ -27,8 +27,7 @@ fun CorpusScaffold(
                 CorpusViewEffect.NoViewEffect -> {}
                 is CorpusViewEffect.SelectTab -> {
                     val uriBuilder =
-                        Uri.Builder().path(Screen.CorpusHome.route)
-                            .appendPath(viewModel.state.value.corpus?.id)
+                        Uri.Builder().path(Screen.CorpusHome.route).appendPath(viewModel.state.value.corpus?.id)
                     when (it.tab) {
                         CorpusTab.HOME -> uriBuilder.appendPath("home")
                         CorpusTab.QUIZ -> uriBuilder.appendPath("quiz")
