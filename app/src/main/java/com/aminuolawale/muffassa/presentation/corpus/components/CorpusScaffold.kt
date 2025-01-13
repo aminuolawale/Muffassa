@@ -40,17 +40,7 @@ fun CorpusScaffold(
             }
         ) {
             content()
-            CorpusNavigationDrawer(state.value, onHomeClick = {
-                navController.navigate(
-                    Uri.Builder().path(Screen.CorpusHome.route).appendPath(state.value.corpus?.id)
-                        .appendPath("home").build().toString()
-                )
-            }, onResourcesClick = {
-                navController.navigate(
-                    Uri.Builder().path(Screen.CorpusHome.route).appendPath(state.value.corpus?.id)
-                        .appendPath("resources").build().toString()
-                )
-            })
+            CorpusNavigationDrawer(navController, state.value)
 
         }
     }
