@@ -19,29 +19,37 @@ fun CorpusScaffold(
     content: @Composable () -> Unit
 ) {
     viewModel.state.collectAsState().let { state ->
-        MuffassaScaffold(
-            screen = Screen.CorpusHome,
-            navController = navController,
-            topBar = {
-                CorpusViewTopAppBar(
-                    state = state.value,
-                    onNavigationIconClick = { viewModel.onEvent(CorpusEvent.ToggleNavDrawer) })
-            },
-            fab = {
-                when (state.value.activeTab) {
-                    CorpusTab.RESOURCES -> {
-                        val uri = Uri.Builder().path(Screen.NewResource.route)
-                            .appendQueryParameter("corpusId", state.value.corpus?.id).build()
-                        ResourcesFab(onClick = { navController.navigate(uri.toString()) })
+        CorpusNavigationDrawer(navController, state.value) {
+
+            MuffassaScaffold(
+                screen = Screen.CorpusHome,
+                navController = navController,
+                topBar = {
+                    CorpusViewTopAppBar(
+                        state = state.value,
+                        onNavigationIconClick = { viewModel.onEvent(CorpusEvent.ToggleNavDrawer) },
+                        onOptionsClick = { viewModel.onEvent(CorpusEvent.ToggleOptionsMenu) },
+                        onEditClick = {
+                            viewModel.onEvent(CorpusEvent.BeginEdit)
+                            viewModel.onEvent(CorpusEvent.OptionsMenu(false))
+                        },
+                        onOptionsDismissRequest = { viewModel.onEvent(CorpusEvent.OptionsMenu(false)) })
+                },
+                fab = {
+                    when (state.value.activeTab) {
+                        CorpusTab.RESOURCES -> {
+                            val uri = Uri.Builder().path(Screen.NewResource.route)
+                                .appendQueryParameter("corpusId", state.value.corpus?.id).build()
+                            ResourcesFab(onClick = { navController.navigate(uri.toString()) })
+                        }
+
+                        else -> {}
                     }
-
-                    else -> {}
                 }
-            }
-        ) {
-            content()
-            CorpusNavigationDrawer(navController, state.value)
+            ) {
+                content()
 
+            }
         }
     }
 

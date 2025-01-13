@@ -7,10 +7,11 @@ import com.aminuolawale.muffassa.domain.model.Resource
 
 data class CorpusViewState(
     val corpus: Corpus? = null,
-    val editState: CorpusEditState = CorpusEditState.NONE,
+    val isEditing: Boolean = false,
     val activeTab: CorpusTab = CorpusTab.RESOURCES,
     val resources : List<Resource> = emptyList(),
     val drawerState: DrawerState = DrawerState(DrawerValue.Closed),
+    val optionsMenu: Boolean = false,
 )
 
 enum class CorpusEditState {

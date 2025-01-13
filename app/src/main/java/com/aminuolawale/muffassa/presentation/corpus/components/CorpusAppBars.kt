@@ -26,7 +26,13 @@ import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Unit) {
+fun CorpusViewTopAppBar(
+    state: CorpusViewState,
+    onNavigationIconClick: () -> Unit,
+    onOptionsClick: () -> Unit,
+    onEditClick: () -> Unit,
+    onOptionsDismissRequest: () -> Unit
+) {
     TopAppBar(
         title = {
             when (state.activeTab) {
@@ -45,8 +51,15 @@ fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Uni
             }
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = { onOptionsClick() }) {
                 Icon(Icons.Default.MoreVert, contentDescription = "Corpus options")
+            }
+            if (state.optionsMenu) {
+                OptionsMenu(
+                    state,
+                    onDeleteClick =onEditClick ,
+                    onDismissRequest = onOptionsDismissRequest
+                )
             }
         },
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()

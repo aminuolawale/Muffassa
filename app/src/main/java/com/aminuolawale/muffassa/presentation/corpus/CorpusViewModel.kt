@@ -37,11 +37,11 @@ class CorpusViewModel @Inject constructor(
             }
 
             is CorpusEvent.BeginEdit -> {
-                _state.update { it.copy(editState = corpusEvent.editField) }
+                _state.update { it.copy(isEditing = true) }
             }
 
             CorpusEvent.EndEdit -> {
-                _state.update { it.copy(editState = CorpusEditState.NONE) }
+                _state.update { it.copy(isEditing = false) }
                 _state.value.corpus?.let {
                     viewModelScope.launch { corpusRepository.insertCorpus(it) }
                 }
@@ -65,6 +65,16 @@ class CorpusViewModel @Inject constructor(
                 _state.update {
                     it.copy(drawerState = DrawerState(if (corpusEvent.open) DrawerValue.Open else DrawerValue.Closed))
                 }
+            }
+
+            is CorpusEvent.OptionsMenu -> {
+                _state.update {
+                    it.copy(optionsMenu = corpusEvent.open)
+                }
+            }
+
+            CorpusEvent.ToggleOptionsMenu -> {
+                _state.update { it.copy(optionsMenu = !it.optionsMenu) }
             }
         }
     }

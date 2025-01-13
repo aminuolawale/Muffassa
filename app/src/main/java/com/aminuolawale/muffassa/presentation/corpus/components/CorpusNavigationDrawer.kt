@@ -31,12 +31,12 @@ import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 @Composable
 fun CorpusNavigationDrawer(
     navController: NavController,
-    state: CorpusViewState
+    state: CorpusViewState,
+    content: @Composable () -> Unit,
 ) {
     val corpusUri = CorpusUri(state.corpus?.id)
     ModalNavigationDrawer(drawerState = state.drawerState, drawerContent = {
         ModalDrawerSheet {
-            Spacer(modifier = Modifier.height(80.dp))
             Text("Muffassa", fontSize = 24.sp, modifier = Modifier.padding(16.dp))
             HorizontalDivider()
             NavigationDrawerItem(
@@ -91,6 +91,7 @@ fun CorpusNavigationDrawer(
                 }
             )
             HorizontalDivider()
+            // Maybe just stats?
             NavigationDrawerItem(
                 label = {
                     NavigationDRawerItemLabel(
@@ -109,9 +110,11 @@ fun CorpusNavigationDrawer(
             )
         }
     }) {
+        content()
 
     }
 }
+
 
 @Composable
 fun NavigationDRawerItemLabel(text: @Composable () -> Unit, icon: @Composable () -> Unit) {

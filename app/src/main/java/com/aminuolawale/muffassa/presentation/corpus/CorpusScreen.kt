@@ -40,12 +40,10 @@ fun CorpusScreen(
                 ) {
                     TitleArea(
                         text = state.value.corpus?.title ?: "Untitled",
-                        isEditing = state.value.editState == CorpusEditState.TITLE,
+                        isEditing = state.value.isEditing,
                         onClick = {
                             viewModel.onEvent(
-                                CorpusEvent.BeginEdit(
-                                    CorpusEditState.TITLE
-                                )
+                                CorpusEvent.BeginEdit
                             )
                         },
                         onValueChange = { value ->
@@ -64,8 +62,8 @@ fun CorpusScreen(
                 ) {
                     DescriptionArea(modifier = Modifier.fillMaxWidth(),
                         text = state.value.corpus?.description ?: "Description",
-                        isEditing = state.value.editState == CorpusEditState.DESCRIPTION,
-                        onClick = { viewModel.onEvent(CorpusEvent.BeginEdit(CorpusEditState.DESCRIPTION)) },
+                        isEditing = state.value.isEditing,
+                        onClick = { viewModel.onEvent(CorpusEvent.BeginEdit) },
                         onValueChange = { viewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
                 }
                 Spacer(modifier = Modifier.height(20.dp))
