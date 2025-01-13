@@ -2,9 +2,10 @@ package com.aminuolawale.muffassa.presentation.corpus
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.aminuolawale.muffassa.presentation.corpus.quiz.QuizTab
+import com.aminuolawale.muffassa.presentation.corpus.quiz.QuizScreen
 import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesScreen
-import com.aminuolawale.muffassa.presentation.corpus.snippets.SnippetsTab
+import com.aminuolawale.muffassa.presentation.corpus.settings.SettingsScreen
+import com.aminuolawale.muffassa.presentation.corpus.snippets.SnippetsScreen
 
 @Composable
 fun CorpusRoute(
@@ -19,9 +20,10 @@ fun CorpusRoute(
         corpusViewModel.initialize(nonNullCorpusId, corpusTab)
         when (corpusTab) {
             CorpusTab.HOME -> CorpusScreen(navController, corpusViewModel)
-            CorpusTab.QUIZ -> QuizTab()
-            CorpusTab.SNIPPETS -> SnippetsTab()
+            CorpusTab.QUIZ -> QuizScreen(navController, corpusViewModel)
+            CorpusTab.SNIPPETS -> SnippetsScreen(navController, corpusViewModel)
             CorpusTab.RESOURCES -> ResourcesScreen(navController, corpusViewModel)
+            CorpusTab.SETTINGS -> SettingsScreen(navController,corpusViewModel)
         }
     }
 }

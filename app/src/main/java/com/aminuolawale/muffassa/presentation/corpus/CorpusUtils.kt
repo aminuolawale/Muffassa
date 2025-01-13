@@ -33,6 +33,12 @@ class CorpusUri(val corpusId: String?) {
                 .appendPath("quiz").build().toString()
 
         }
+    val settings: String
+        get() {
+            return Uri.Builder().path(Screen.CorpusHome.route).appendPath(corpusId)
+                .appendPath("settings").build().toString()
+
+        }
 
 
 }

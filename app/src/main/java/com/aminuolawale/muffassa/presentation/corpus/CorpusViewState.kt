@@ -24,4 +24,5 @@ enum class CorpusTab {
     QUIZ,
     SNIPPETS,
     RESOURCES,
+    SETTINGS,
 }

@@ -103,30 +103,6 @@ class MainActivity : AppCompatActivity() {
                             )
 
                         }
-//                        composable(
-//                            route = "${Screen.CorpusHome.route}/{corpusId}/home",
-//                            arguments = listOf(navArgument(name = "corpusId") {
-//                                type = NavType.StringType
-//                                defaultValue = ""
-//
-//                            })
-//                        ) {
-//                            CorpusScreen(
-//                                navController,
-//                                corpusViewModel,
-//                                it.arguments?.getString("corpusId"),
-//                            )
-//                        }
-//                        composable(
-//                            route = "${Screen.CorpusHome.route}/{corpusId}/resources",
-//                            arguments = listOf(navArgument(name = "corpusId") {
-//                                type = NavType.StringType
-//                                defaultValue = ""
-//
-//                            })
-//                        ) {
-//                            ResourcesScreen(navController, corpusViewModel)
-//                        }
                         composable(
                             route = "${Screen.NewResource.route}?corpusId={corpusId}",
                             arguments = listOf(navArgument(name = "corpusId") {

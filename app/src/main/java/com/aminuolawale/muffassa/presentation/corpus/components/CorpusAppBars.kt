@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,8 +40,13 @@ fun CorpusViewTopAppBar(state: CorpusViewState, onNavigationIconClick: () -> Uni
             IconButton(onClick = { onNavigationIconClick() }) {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    contentDescription = "Back"
+                    contentDescription = "Corpus Menu"
                 )
+            }
+        },
+        actions = {
+            IconButton(onClick = {}) {
+                Icon(Icons.Default.MoreVert, contentDescription = "Corpus options")
             }
         },
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
