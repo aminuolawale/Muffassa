@@ -39,6 +39,7 @@ class HomeViewModel @Inject constructor(
     fun onEvent(event: HomeEvent) {
         when (event) {
             HomeEvent.NewCorpus -> googleAuthUiClient.getSignedInUser()?.userId?.let {
+                // Show bottom sheet.
                 viewModelScope.launch {
                     val corpusId = UUID.randomUUID().toString()
                      corpusRepository.insertCorpus(

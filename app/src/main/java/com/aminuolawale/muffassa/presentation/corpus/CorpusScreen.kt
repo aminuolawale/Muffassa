@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -38,21 +36,10 @@ fun CorpusScreen(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TitleArea(
+                    Text(
                         text = state.value.corpus?.title ?: "Untitled",
-                        isEditing = state.value.isEditing,
-                        onClick = {
-                            viewModel.onEvent(
-                                CorpusEvent.BeginEdit
-                            )
-                        },
-                        onValueChange = { value ->
-                            viewModel.onEvent(
-                                CorpusEvent.TitleChanged(
-                                    value
-                                )
-                            )
-                        })
+                        fontSize = 36.sp
+                    )
 
                 }
                 Row(
@@ -60,18 +47,17 @@ fun CorpusScreen(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    DescriptionArea(modifier = Modifier.fillMaxWidth(),
+                    Text(
                         text = state.value.corpus?.description ?: "Description",
-                        isEditing = state.value.isEditing,
-                        onClick = { viewModel.onEvent(CorpusEvent.BeginEdit) },
-                        onValueChange = { viewModel.onEvent(CorpusEvent.DescriptionChanged(it)) })
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    ContentArea()
+                    Text("Artefacts")
                 }
 
 
@@ -80,44 +66,3 @@ fun CorpusScreen(
     }
 }
 
-@Composable
-fun TitleArea(
-    text: String,
-    isEditing: Boolean,
-    onClick: () -> Unit,
-    onValueChange: (value: String) -> Unit
-) {
-    if (isEditing) {
-        TextField(modifier = Modifier.padding(0.dp),
-            value = text,
-            textStyle = TextStyle(fontSize = 36.sp),
-            onValueChange = { onValueChange.invoke(it) })
-    } else {
-        Text(
-            text = text,
-            fontSize = 36.sp,
-            modifier = Modifier.clickable {
-                onClick.invoke()
-            })
-    }
-}
-
-@Composable
-fun DescriptionArea(
-    modifier: Modifier,
-    text: String,
-    isEditing: Boolean,
-    onClick: () -> Unit,
-    onValueChange: (value: String) -> Unit
-) {
-    if (isEditing) {
-        TextField(modifier = modifier, value = text, onValueChange = { onValueChange.invoke(it) })
-    } else {
-        Text(text = text, modifier = modifier.clickable { onClick.invoke() })
-    }
-}
-
-@Composable
-fun ContentArea() {
-    Text("Artefacts")
-}

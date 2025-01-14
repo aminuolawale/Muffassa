@@ -7,7 +7,7 @@ class CorpusUri(val corpusId: String?) {
 
     val resources: String
         get() {
-            return Uri.Builder().path(Screen.CorpusHome.route).appendPath(corpusId)
+            return Uri.Builder().path(Screen.Corpus.route).appendPath(corpusId)
                 .appendPath("resources").build()
                 .toString()
 
@@ -15,13 +15,13 @@ class CorpusUri(val corpusId: String?) {
     val home: String
         get() {
 
-            return Uri.Builder().path(Screen.CorpusHome.route).appendPath(corpusId)
+            return Uri.Builder().path(Screen.Corpus.route).appendPath(corpusId)
                 .appendPath("home").build().toString()
         }
 
     val snippets: String
         get() {
-            return Uri.Builder().path(Screen.CorpusHome.route).appendPath(corpusId)
+            return Uri.Builder().path(Screen.Corpus.route).appendPath(corpusId)
                 .appendPath("snippets").build()
                 .toString()
 
@@ -29,13 +29,13 @@ class CorpusUri(val corpusId: String?) {
 
     val quiz: String
         get() {
-            return Uri.Builder().path(Screen.CorpusHome.route).appendPath(corpusId)
+            return Uri.Builder().path(Screen.Corpus.route).appendPath(corpusId)
                 .appendPath("quiz").build().toString()
 
         }
     val settings: String
         get() {
-            return Uri.Builder().path(Screen.CorpusHome.route).appendPath(corpusId)
+            return Uri.Builder().path(Screen.Corpus.route).appendPath(corpusId)
                 .appendPath("settings").build().toString()
 
         }

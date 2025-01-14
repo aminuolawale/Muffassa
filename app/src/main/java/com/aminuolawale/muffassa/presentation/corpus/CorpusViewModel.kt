@@ -42,9 +42,6 @@ class CorpusViewModel @Inject constructor(
 
             CorpusEvent.EndEdit -> {
                 _state.update { it.copy(isEditing = false) }
-                _state.value.corpus?.let {
-                    viewModelScope.launch { corpusRepository.insertCorpus(it) }
-                }
             }
 
             is CorpusEvent.DescriptionChanged -> {
@@ -75,6 +72,11 @@ class CorpusViewModel @Inject constructor(
 
             CorpusEvent.ToggleOptionsMenu -> {
                 _state.update { it.copy(optionsMenu = !it.optionsMenu) }
+            }
+
+            is CorpusEvent.Save -> {
+                _state.update { it.copy(isEditing = false) }
+                viewModelScope.launch { corpusRepository.insertCorpus(corpusEvent.corpus) }
             }
         }
     }

@@ -33,7 +33,7 @@ fun NewResourceScreen(
         viewModel.viewEffect.collectLatest { viewEffect ->
             when (viewEffect) {
                 NewResourceViewEffect.NoViewEffect -> {}
-                is NewResourceViewEffect.Saved -> navController.navigate(Screen.CorpusHome.route + "/${viewEffect.resource.corpusId}?tab=${CorpusTab.RESOURCES.ordinal}")
+                is NewResourceViewEffect.Saved -> navController.navigate(Screen.Corpus.route + "/${viewEffect.resource.corpusId}?tab=${CorpusTab.RESOURCES.ordinal}")
             }
         }
     }

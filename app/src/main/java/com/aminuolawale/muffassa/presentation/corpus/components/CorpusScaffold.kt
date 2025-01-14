@@ -20,9 +20,11 @@ fun CorpusScaffold(
 ) {
     viewModel.state.collectAsState().let { state ->
         CorpusNavigationDrawer(navController, state.value) {
-
+            if (state.value.isEditing) {
+                CorpusBottomSheet(viewModel)
+            }
             MuffassaScaffold(
-                screen = Screen.CorpusHome,
+                screen = Screen.Corpus,
                 navController = navController,
                 topBar = {
                     CorpusViewTopAppBar(
