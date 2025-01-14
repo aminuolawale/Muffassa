@@ -9,6 +9,7 @@ import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 import com.aminuolawale.muffassa.presentation.corpus.CorpusEvent
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
+import com.aminuolawale.muffassa.presentation.corpus.utils.CorpusValidator
 import com.aminuolawale.muffassa.presentation.newresource.components.ResourcesFab
 
 
@@ -20,8 +21,14 @@ fun CorpusScaffold(
 ) {
     viewModel.state.collectAsState().let { state ->
         CorpusNavigationDrawer(navController, state.value) {
-            if (state.value.isEditing) {
-                CorpusBottomSheet(viewModel)
+            state.value.corpus?.let { corpus ->
+                if (state.value.isEditing) {
+                    CorpusBottomSheet(corpus, onSaveClick = {
+                        viewModel.onEvent(CorpusEvent.Save(it))
+                    }, onDismiss = {
+                        viewModel.onEvent(CorpusEvent.EndEdit)
+                    })
+                }
             }
             MuffassaScaffold(
                 screen = Screen.Corpus,

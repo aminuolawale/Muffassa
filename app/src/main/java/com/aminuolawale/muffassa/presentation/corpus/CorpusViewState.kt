@@ -14,12 +14,6 @@ data class CorpusViewState(
     val optionsMenu: Boolean = false,
 )
 
-enum class CorpusEditState {
-    NONE,
-    TITLE,
-    DESCRIPTION,
-}
-
 enum class CorpusTab {
      HOME,
     QUIZ,

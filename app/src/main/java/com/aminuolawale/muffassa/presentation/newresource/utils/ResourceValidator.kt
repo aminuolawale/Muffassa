@@ -1,14 +1,17 @@
 package com.aminuolawale.muffassa.presentation.newresource.utils
 
 import com.aminuolawale.muffassa.domain.model.Resource
-import com.aminuolawale.muffassa.presentation.newresource.FormField
+import com.aminuolawale.muffassa.presentation.components.FormField
 
 class ResourceValidator(private val resource: Resource) {
 
-    // Should not be read without ::validate being called.
-    var errors : Map<FormField, List<String>> = mapOf()
+    var errors: Map<FormField, List<String>> = mapOf()
+        get() {
+            validate()
+            return field
+        }
 
-    fun validate(): Boolean {
+    private fun validate(): Boolean {
         errors = mapOf(FormField.NAME to validateName(), FormField.DATA to validateData())
         return errors.all { it.value.isEmpty() }
     }
@@ -17,7 +20,7 @@ class ResourceValidator(private val resource: Resource) {
     private fun validateName(): List<String> {
         var errorMessages = mutableListOf<String>()
         if (resource.name.isBlank()) {
-          errorMessages =  errorMessages.plus("Name cannot be blank").toMutableList()
+            errorMessages = errorMessages.plus("Name cannot be blank").toMutableList()
         }
         return errorMessages
     }

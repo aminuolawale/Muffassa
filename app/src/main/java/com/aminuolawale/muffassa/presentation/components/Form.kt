@@ -40,3 +40,10 @@ fun TextFormField(
         }
     }
 }
+
+enum class FormField {
+                     TITLE,
+    NAME,
+    DESCRIPTION,
+    DATA,
+}

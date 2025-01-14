@@ -18,27 +18,28 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.aminuolawale.muffassa.domain.model.Corpus
+import com.aminuolawale.muffassa.presentation.components.FormField
 import com.aminuolawale.muffassa.presentation.components.TextFormField
-import com.aminuolawale.muffassa.presentation.corpus.CorpusEvent
-import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
+import com.aminuolawale.muffassa.presentation.corpus.utils.CorpusValidator
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CorpusBottomSheet(viewModel: CorpusViewModel) {
+fun CorpusBottomSheet(corpus: Corpus, onSaveClick: (Corpus) -> Unit, onDismiss: () -> Unit) {
     val sheetState = rememberModalBottomSheetState()
-    var state by remember { mutableStateOf(viewModel.state.value.corpus) }
+    var state by remember { mutableStateOf(corpus) }
+    var errorsState by remember { mutableStateOf<MutableMap<FormField, List<String>>?>(null) }
     ModalBottomSheet(
         modifier = Modifier
             .fillMaxHeight(),
-        onDismissRequest = { viewModel.onEvent(CorpusEvent.EndEdit) },
+        onDismissRequest = onDismiss,
         sheetState = sheetState
     ) {
         Column(
@@ -52,23 +53,33 @@ fun CorpusBottomSheet(viewModel: CorpusViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Spacer(modifier = Modifier.width(1.dp))
-                IconButton(onClick = { state?.let { viewModel.onEvent(CorpusEvent.Save(it)) } }) {
+                IconButton(onClick = {
+                    val errors = CorpusValidator(state).getErrors()
+                    if (errors == null) {
+                        onSaveClick(state)
+                    } else {
+                        errorsState = errors.toMutableMap()
+                    }
+                }) {
                     Icon(Icons.Default.Check, contentDescription = "Save")
                 }
             }
             TextFormField(
-                value = state?.title ?: "",
-                errors = listOf(),
+                value = state.title,
+                errors = errorsState?.get(FormField.TITLE) ?: listOf(),
                 label = { Text("Name") },
-                onValueChange = { state = state?.copy(title = it) },
-                onFocusChange = {}
+                onValueChange = {
+                    state = state.copy(title = it)
+                    errorsState = null
+                },
+                onFocusChange = { errorsState = null }
             )
             TextFormField(
-                value = state?.description ?: "",
+                value = state.description,
                 errors = listOf(),
                 label = { Text("Description") },
                 minLines = 2,
-                onValueChange = { state = state?.copy(description = it) },
+                onValueChange = { state = state.copy(description = it) },
                 onFocusChange = {}
             )
         }

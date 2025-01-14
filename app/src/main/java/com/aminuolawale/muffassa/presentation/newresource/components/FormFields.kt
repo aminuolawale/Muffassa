@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.FocusState
 import com.aminuolawale.muffassa.domain.model.ResourceType
+import com.aminuolawale.muffassa.presentation.components.FormField
 import com.aminuolawale.muffassa.presentation.components.TextFormField
-import com.aminuolawale.muffassa.presentation.newresource.FormField
 import com.aminuolawale.muffassa.presentation.newresource.NewResourceViewState
 
 @Composable
