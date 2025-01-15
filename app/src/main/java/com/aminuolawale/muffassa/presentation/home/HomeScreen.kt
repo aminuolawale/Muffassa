@@ -19,6 +19,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
                         val uri =
                             Uri.Builder().path(Screen.Corpus.route).appendPath(it.corpusId)
                                 .appendPath("home")
+                                .appendQueryParameter("isEditing", it.isEditing.toString())
                                 .build()
                         navController.navigate(uri.toString())
                     }

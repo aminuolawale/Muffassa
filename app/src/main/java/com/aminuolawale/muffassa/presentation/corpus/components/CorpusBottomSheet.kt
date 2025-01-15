@@ -24,15 +24,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aminuolawale.muffassa.domain.model.Corpus
 import com.aminuolawale.muffassa.presentation.components.FormField
 import com.aminuolawale.muffassa.presentation.components.TextFormField
+import com.aminuolawale.muffassa.presentation.corpus.CorpusUri
 import com.aminuolawale.muffassa.presentation.corpus.utils.CorpusValidator
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CorpusBottomSheet(corpus: Corpus, onSaveClick: (Corpus) -> Unit, onDismiss: () -> Unit) {
+fun CorpusBottomSheet(navController: NavController, corpus: Corpus, onSaveClick: (Corpus) -> Unit, onDismiss: () -> Unit) {
     val sheetState = rememberModalBottomSheetState()
     var state by remember { mutableStateOf(corpus) }
     var errorsState by remember { mutableStateOf<MutableMap<FormField, List<String>>?>(null) }
@@ -57,6 +59,7 @@ fun CorpusBottomSheet(corpus: Corpus, onSaveClick: (Corpus) -> Unit, onDismiss: 
                     val errors = CorpusValidator(state).getErrors()
                     if (errors == null) {
                         onSaveClick(state)
+                        navController.navigate(CorpusUri(state.id).home)
                     } else {
                         errorsState = errors.toMutableMap()
                     }

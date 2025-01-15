@@ -23,7 +23,7 @@ fun CorpusScaffold(
         CorpusNavigationDrawer(navController, state.value) {
             state.value.corpus?.let { corpus ->
                 if (state.value.isEditing) {
-                    CorpusBottomSheet(corpus, onSaveClick = {
+                    CorpusBottomSheet(navController,corpus, onSaveClick = {
                         viewModel.onEvent(CorpusEvent.Save(it))
                     }, onDismiss = {
                         viewModel.onEvent(CorpusEvent.EndEdit)

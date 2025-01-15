@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
                             id = corpusId, title = "Untitled", creatorUserId = it
                         )
                     )
-                    _viewEffect.emit(HomeViewEffect.ViewCorpus(corpusId))
+                    _viewEffect.emit(HomeViewEffect.ViewCorpus(corpusId, isEditing=true))
                 }
             }
 
