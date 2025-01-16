@@ -13,12 +13,11 @@ fun CorpusRoute(
     corpusViewModel: CorpusViewModel,
     corpusId: String?,
     tab: String?,
-    isEditing: Boolean = false,
 ) {
     corpusViewModel.onEvent(CorpusEvent.NavDrawer(open = false))
     corpusId?.let { nonNullCorpusId ->
         val corpusTab = CorpusTab.entries.find { it.name.lowercase() == tab } ?: CorpusTab.HOME
-        corpusViewModel.initialize(nonNullCorpusId, corpusTab, isEditing)
+        corpusViewModel.initialize(nonNullCorpusId, corpusTab)
         when (corpusTab) {
             CorpusTab.HOME -> CorpusScreen(navController, corpusViewModel)
             CorpusTab.QUIZ -> QuizScreen(navController, corpusViewModel)

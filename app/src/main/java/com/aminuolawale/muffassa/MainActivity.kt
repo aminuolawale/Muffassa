@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                             HomeScreen(navController, homeViewModel)
                         }
                         composable(
-                            route = "${Screen.Corpus.route}/{corpusId}/{tab}?isEditing={isEditing}",
+                            route = "${Screen.Corpus.route}/{corpusId}/{tab}",
                             arguments = listOf(navArgument(name = "corpusId") {
                                 type = NavType.StringType
                                 defaultValue = ""
@@ -90,18 +90,13 @@ class MainActivity : AppCompatActivity() {
                                 type = NavType.StringType
                                 defaultValue = ""
 
-                            }, navArgument(name = "isEditing") {
-                                type = NavType.BoolType
-                                defaultValue = false
-
                             })
                         ) {
                             CorpusRoute(
                                 navController,
                                 corpusViewModel,
                                 it.arguments?.getString("corpusId"),
-                                it.arguments?.getString("tab"),
-                                it.arguments?.getBoolean("isEditing")?:false,
+                                it.arguments?.getString("tab")
                             )
 
                         }

@@ -19,10 +19,10 @@ class CorpusViewModel @Inject constructor(
     private val _state = MutableStateFlow(CorpusViewState())
     val state = _state.asStateFlow()
 
-    fun initialize(corpusId: String, corpusTab: CorpusTab, isEditing: Boolean) {
+    fun initialize(corpusId: String, corpusTab: CorpusTab) {
         viewModelScope.launch {
             val corpus = corpusRepository.getCorpus(corpusId)
-            _state.update { it.copy(corpus = corpus, activeTab = corpusTab, isEditing = isEditing) }
+            _state.update { it.copy(corpus = corpus, activeTab = corpusTab) }
         }
     }
 

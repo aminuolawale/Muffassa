@@ -2,7 +2,6 @@ package com.aminuolawale.muffassa.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aminuolawale.muffassa.domain.model.Corpus
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
 import com.aminuolawale.muffassa.presentation.signin.GoogleAuthUiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 
@@ -38,17 +36,8 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            HomeEvent.NewCorpus -> googleAuthUiClient.getSignedInUser()?.userId?.let {
-                // Show bottom sheet.
-                viewModelScope.launch {
-                    val corpusId = UUID.randomUUID().toString()
-                     corpusRepository.insertCorpus(
-                        Corpus(
-                            id = corpusId, title = "Untitled", creatorUserId = it
-                        )
-                    )
-                    _viewEffect.emit(HomeViewEffect.ViewCorpus(corpusId, isEditing=true))
-                }
+            HomeEvent.NewCorpus -> {
+                _state.update { it.copy(isCreating = true) }
             }
 
             is HomeEvent.ViewCorpus -> viewModelScope.launch {
@@ -85,14 +74,23 @@ class HomeViewModel @Inject constructor(
             HomeEvent.BeginSearch -> {
                 _state.update { it.copy(isSearching = true) }
             }
-        }
-    }
 
-    fun onViewEffectComplete() {
-        viewModelScope.launch {
-            _viewEffect.emit(HomeViewEffect.NoViewEffect)
-        }
+            HomeEvent.DiscardCorpus -> {
+                _state.update { it.copy(isCreating = false) }
+            }
 
+            is HomeEvent.SaveCorpus -> {
+                _state.update { it.copy(isCreating = false) }
+                viewModelScope.launch {
+                    corpusRepository.insertCorpus(event.corpus)
+                    _viewEffect.emit(
+                        HomeViewEffect.ViewCorpus(
+                            event.corpus.id
+                        )
+                    )
+                }
+            }
+        }
     }
 
 }

@@ -9,7 +9,7 @@ import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 import com.aminuolawale.muffassa.presentation.corpus.CorpusEvent
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
-import com.aminuolawale.muffassa.presentation.corpus.utils.CorpusValidator
+import com.aminuolawale.muffassa.presentation.home.components.CorpusCreationBottomSheet
 import com.aminuolawale.muffassa.presentation.newresource.components.ResourcesFab
 
 
@@ -23,7 +23,7 @@ fun CorpusScaffold(
         CorpusNavigationDrawer(navController, state.value) {
             state.value.corpus?.let { corpus ->
                 if (state.value.isEditing) {
-                    CorpusBottomSheet(navController,corpus, onSaveClick = {
+                    CorpusCreationBottomSheet(corpus, onSave = {
                         viewModel.onEvent(CorpusEvent.Save(it))
                     }, onDismiss = {
                         viewModel.onEvent(CorpusEvent.EndEdit)
