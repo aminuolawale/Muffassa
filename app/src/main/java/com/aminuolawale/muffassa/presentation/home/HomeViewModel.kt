@@ -90,6 +90,10 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
+
+            is HomeEvent.SelectionChange -> {
+                _state.update { it.copy(isSelecting = event.isSelecting) }
+            }
         }
     }
 

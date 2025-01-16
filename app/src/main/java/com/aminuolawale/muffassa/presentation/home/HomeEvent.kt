@@ -8,6 +8,7 @@ sealed class HomeEvent {
     data object DiscardCorpus : HomeEvent()
     data class ViewCorpus(val corpusId: String): HomeEvent()
     data class  AddSelection(val corpusId: String): HomeEvent()
+    data class SelectionChange(val isSelecting: Boolean): HomeEvent()
     data object  EndSelection: HomeEvent()
     data object  DeleteCorpora: HomeEvent()
     data object BeginSearch: HomeEvent()
