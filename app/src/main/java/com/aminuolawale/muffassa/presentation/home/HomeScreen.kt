@@ -5,9 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.Screen
-import com.aminuolawale.muffassa.presentation.home.components.CorpusList
 import com.aminuolawale.muffassa.presentation.home.components.HomeScaffold
-import com.aminuolawale.muffassa.presentation.home.components.NewCorpusList
+import com.aminuolawale.muffassa.presentation.home.components.CorpusList
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -29,8 +28,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             }
     }
     HomeScaffold(viewModel = viewModel, navController = navController) {
-        CorpusList(viewModel)
-//            NewCorpusList(viewModel)
+//        CorpusList(viewModel)
+            CorpusList(viewModel)
     }
 }
 

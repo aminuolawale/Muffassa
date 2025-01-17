@@ -35,14 +35,9 @@ fun HomeTopAppBar(
     navController: NavController,
 ) {
     viewModel.state.collectAsState().let { state ->
-        if (state.value.isSelecting) {
-            SelectionAppBar(
-                onDeleteClick = { viewModel.onEvent(HomeEvent.DeleteCorpora) },
-                onCancelClick = { viewModel.onEvent(HomeEvent.EndSelection) })
-        } else {
+        if (!state.value.isSelecting) {
             DefaultAppBar(
                 homeViewState = state.value,
-                onSearchClick = { viewModel.onEvent(HomeEvent.BeginSearch) },
                 onProfileClick = { navController.navigate(Screen.Profile.route) })
         }
     }
@@ -53,15 +48,11 @@ fun HomeTopAppBar(
 @Composable
 fun DefaultAppBar(
     homeViewState: HomeViewState,
-    onSearchClick: () -> Unit,
     onProfileClick: () -> Unit
 ) {
     TopAppBar(
         title = { Text("Corpora") },
         actions = {
-            IconButton(onClick = { onSearchClick() }) {
-                Icon(Icons.Default.Search, contentDescription = "Search")
-            }
             Spacer(modifier = Modifier.width(10.dp))
             AsyncImage(
                 model = homeViewState.userData?.profilePictureUrl,

@@ -64,15 +64,11 @@ class HomeViewModel @Inject constructor(
                 )
             }
 
-            HomeEvent.DeleteCorpora -> {
+           is HomeEvent.DeleteCorpora -> {
                 viewModelScope.launch {
-                    corpusRepository.deleteCorpora(_state.value.selectionList.toList())
+                    corpusRepository.deleteCorpora(event.selectionList)
                     _state.update { it.copy(isSelecting = false) }
                 }
-            }
-
-            HomeEvent.BeginSearch -> {
-                _state.update { it.copy(isSearching = true) }
             }
 
             HomeEvent.DiscardCorpus -> {
