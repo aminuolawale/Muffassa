@@ -15,8 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aminuolawale.muffassa.domain.model.Resource
+import com.aminuolawale.muffassa.presentation.components.FunctionalList
 import com.aminuolawale.muffassa.presentation.utils.Utils
 
+@Composable
+fun ResourcesList(resourcesViewModel: ResourcesViewModel) {
+    resourcesViewModel.state.let { state ->
+        FunctionalList(
+            listItems = state.value.resourcesList,
+            itemKey = { it.id },
+            onSelectionChange = { resourcesViewModel.onEvent(ResourcesEvent.SelectionChange(it)) },
+            onViewItem = {},
+            selectionActions = listOf()
+        ) {
+            ResourceItem(it)
+        }
+    }
+}
 
 @Composable
 fun ResourceItem(resource: Resource) {
@@ -27,13 +42,20 @@ fun ResourceItem(resource: Resource) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(Icons.Default.Menu, contentDescription = "Note", modifier = Modifier.fillMaxWidth(0.2f))
+        Icon(
+            Icons.Default.Menu,
+            contentDescription = "Note",
+            modifier = Modifier.fillMaxWidth(0.2f)
+        )
         Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth(0.80F)) {
             Text(resource.name, fontSize = 18.sp)
             Text(resource.description, fontSize = 12.sp)
 
         }
-        Text(Utils.formatDate(resource.lastUpdated), fontSize = 10.sp, modifier = Modifier.fillMaxWidth())
+        Text(
+            Utils.formatDate(resource.lastUpdated),
+            fontSize = 10.sp,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
-

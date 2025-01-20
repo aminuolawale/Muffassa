@@ -5,9 +5,11 @@ import androidx.compose.material3.DrawerValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aminuolawale.muffassa.domain.repository.CorpusRepository
+import com.aminuolawale.muffassa.presentation.corpus.resources.ResourcesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,14 +17,24 @@ import javax.inject.Inject
 @HiltViewModel
 class CorpusViewModel @Inject constructor(
     private val corpusRepository: CorpusRepository,
+    val resourcesViewModel: ResourcesViewModel,
 ) : ViewModel() {
     private val _state = MutableStateFlow(CorpusViewState())
     val state = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            resourcesViewModel.state.collectLatest { resourcesViewState ->
+                _state.update { it.copy(resourcesViewState = resourcesViewState) }
+            }
+        }
+    }
 
     fun initialize(corpusId: String, corpusTab: CorpusTab) {
         viewModelScope.launch {
             val corpus = corpusRepository.getCorpus(corpusId)
             _state.update { it.copy(corpus = corpus, activeTab = corpusTab) }
+            resourcesViewModel.initialize(corpusId)
         }
     }
 

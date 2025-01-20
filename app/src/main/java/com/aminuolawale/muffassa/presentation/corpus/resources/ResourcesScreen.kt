@@ -1,6 +1,5 @@
 package com.aminuolawale.muffassa.presentation.corpus.resources
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
@@ -10,6 +9,6 @@ import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
 @Composable
 fun ResourcesScreen(navController: NavController, corpusViewModel: CorpusViewModel) {
     CorpusScaffold(navController, corpusViewModel) {
-        Text("Hello")
+        ResourcesList(corpusViewModel.resourcesViewModel)
     }
 }

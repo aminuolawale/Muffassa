@@ -34,6 +34,7 @@ fun CorpusScaffold(
                 screen = Screen.Corpus,
                 navController = navController,
                 topBar = {
+                    if (!state.value.resourcesViewState.isSelecting){
                     CorpusViewTopAppBar(
                         state = state.value,
                         onNavigationIconClick = { viewModel.onEvent(CorpusEvent.ToggleNavDrawer) },
@@ -43,6 +44,7 @@ fun CorpusScaffold(
                             viewModel.onEvent(CorpusEvent.OptionsMenu(false))
                         },
                         onOptionsDismissRequest = { viewModel.onEvent(CorpusEvent.OptionsMenu(false)) })
+                    }
                 },
                 fab = {
                     when (state.value.activeTab) {
