@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,13 +23,17 @@ import com.aminuolawale.muffassa.presentation.utils.Utils
 
 @Composable
 fun ResourcesList(resourcesViewModel: ResourcesViewModel) {
-    resourcesViewModel.state.let { state ->
+    resourcesViewModel.state.collectAsState().let { state ->
         FunctionalList(
             listItems = state.value.resourcesList,
             itemKey = { it.id },
             onSelectionChange = { resourcesViewModel.onEvent(ResourcesEvent.SelectionChange(it)) },
             onViewItem = {},
-            selectionActions = listOf()
+            selectionActions =listOf {
+                IconButton(onClick = { resourcesViewModel.onEvent(ResourcesEvent.DeleteResources(it)) }) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                }
+            }
         ) {
             ResourceItem(it)
         }

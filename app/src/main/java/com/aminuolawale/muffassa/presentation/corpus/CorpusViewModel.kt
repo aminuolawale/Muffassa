@@ -34,7 +34,7 @@ class CorpusViewModel @Inject constructor(
         viewModelScope.launch {
             val corpus = corpusRepository.getCorpus(corpusId)
             _state.update { it.copy(corpus = corpus, activeTab = corpusTab) }
-            resourcesViewModel.initialize(corpusId)
+            resourcesViewModel.initialize(corpusId, viewModelScope)
         }
     }
 

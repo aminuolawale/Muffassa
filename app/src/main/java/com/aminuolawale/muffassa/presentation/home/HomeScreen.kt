@@ -28,7 +28,6 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             }
     }
     HomeScaffold(viewModel = viewModel, navController = navController) {
-//        CorpusList(viewModel)
             CorpusList(viewModel)
     }
 }
