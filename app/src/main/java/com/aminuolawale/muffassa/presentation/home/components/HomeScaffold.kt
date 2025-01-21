@@ -1,6 +1,7 @@
 package com.aminuolawale.muffassa.presentation.home.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.domain.model.Corpus
 import com.aminuolawale.muffassa.presentation.Screen
@@ -15,8 +16,10 @@ fun HomeScaffold(
     navController: NavController,
     content: @Composable () -> Unit,
 ) {
-    if (viewModel.state.value.isCreating) {
-        viewModel.state.value.userData?.userId?.let { creatorUserId ->
+    viewModel.state.collectAsState().let {
+        state ->
+    if (state.value.isCreating) {
+        state.value.userData?.userId?.let { creatorUserId ->
             CorpusCreationBottomSheet(
                 corpus = Corpus(
                     id = UUID.randomUUID().toString(),
@@ -33,5 +36,6 @@ fun HomeScaffold(
         topBar = { HomeTopAppBar(viewModel, navController) },
         fab = { HomeFab(onClick = { viewModel.onEvent(HomeEvent.NewCorpus) }) }) {
         content()
+    }
     }
 }

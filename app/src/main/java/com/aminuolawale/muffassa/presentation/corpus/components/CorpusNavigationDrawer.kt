@@ -90,7 +90,6 @@ fun CorpusNavigationDrawer(
                 }
             )
             HorizontalDivider()
-            // Maybe just stats?
             NavigationDrawerItem(
                 label = {
                     NavigationDRawerItemLabel(

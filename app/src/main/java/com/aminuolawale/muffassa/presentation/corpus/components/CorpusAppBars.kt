@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewState
 
@@ -68,7 +67,6 @@ fun CorpusViewTopAppBar(
 
 @Composable
 fun BottomBarTabButton(
-    text: String?,
     isActive: Boolean,
     onClick: () -> Unit,
     content: @Composable () -> Unit
@@ -84,9 +82,6 @@ fun BottomBarTabButton(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             content()
-            text?.let {
-                Text(text, fontSize = 14.sp)
-            }
         }
     }
 }

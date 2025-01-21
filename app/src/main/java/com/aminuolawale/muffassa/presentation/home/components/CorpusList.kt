@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,20 +24,22 @@ import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 
 @Composable
 fun CorpusList(homeViewModel: HomeViewModel) {
-    FunctionalList(
-        listItems = homeViewModel.state.value.corpusList,
-        itemKey = { it.id },
-        onViewItem = {
-            homeViewModel.onEvent(HomeEvent.ViewCorpus(it.id))
-        },
-        onSelectionChange = { homeViewModel.onEvent(HomeEvent.SelectionChange(it)) },
-        selectionActions = listOf {
-            IconButton(onClick = { homeViewModel.onEvent(HomeEvent.DeleteCorpora(it)) }) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete")
+    homeViewModel.state.collectAsState().let { state ->
+        FunctionalList(
+            listItems = state.value.corpusList,
+            itemKey = { it.id },
+            onViewItem = {
+                homeViewModel.onEvent(HomeEvent.ViewCorpus(it.id))
+            },
+            onSelectionChange = { homeViewModel.onEvent(HomeEvent.SelectionChange(it)) },
+            selectionActions = listOf {
+                IconButton(onClick = { homeViewModel.onEvent(HomeEvent.DeleteCorpora(it)) }) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                }
             }
+        ) {
+            CorpusItem(it)
         }
-    ) {
-        CorpusItem(it)
     }
 }
 

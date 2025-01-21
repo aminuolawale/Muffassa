@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val corpusRepository: CorpusRepository,
-    private val googleAuthUiClient: GoogleAuthUiClient
+    googleAuthUiClient: GoogleAuthUiClient
 ) : ViewModel() {
     private var _state = MutableStateFlow(HomeViewState(googleAuthUiClient.getSignedInUser()))
     val state = _state.asStateFlow()

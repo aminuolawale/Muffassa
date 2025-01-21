@@ -42,7 +42,7 @@ fun TextFormField(
 }
 
 enum class FormField {
-                     TITLE,
+    TITLE,
     NAME,
     DESCRIPTION,
     DATA,
