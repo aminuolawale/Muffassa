@@ -1,6 +1,5 @@
 package com.aminuolawale.muffassa.domain.repository
 
-import com.aminuolawale.muffassa.domain.model.Corpus
 import com.aminuolawale.muffassa.domain.model.Resource
 import kotlinx.coroutines.flow.Flow
 

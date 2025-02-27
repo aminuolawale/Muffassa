@@ -23,7 +23,7 @@ import com.aminuolawale.muffassa.presentation.home.HomeViewModel
 
 
 @Composable
-fun CorpusList(homeViewModel: HomeViewModel) {
+fun CorpusList(homeViewModel: HomeViewModel, modifier: Modifier) {
     homeViewModel.state.collectAsState().let { state ->
         FunctionalList(
             listItems = state.value.corpusList,
@@ -36,7 +36,7 @@ fun CorpusList(homeViewModel: HomeViewModel) {
                 IconButton(onClick = { homeViewModel.onEvent(HomeEvent.DeleteCorpora(it)) }) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
                 }
-            }
+            }, modifier = modifier
         ) {
             CorpusItem(it)
         }

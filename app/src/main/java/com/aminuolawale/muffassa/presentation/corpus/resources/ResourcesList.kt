@@ -33,7 +33,7 @@ fun ResourcesList(resourcesViewModel: ResourcesViewModel) {
                 IconButton(onClick = { resourcesViewModel.onEvent(ResourcesEvent.DeleteResources(it)) }) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
                 }
-            }
+            }, modifier = Modifier
         ) {
             ResourceItem(it)
         }

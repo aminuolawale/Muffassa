@@ -34,23 +34,24 @@ fun <T> FunctionalList(
     onViewItem: (T) -> Unit,
     onSelectionChange: (Boolean) -> Unit,
     selectionActions: List<@Composable (List<String>) -> Unit>,
+    modifier: Modifier,
     itemComposable: @Composable (T) -> Unit
 ) {
     var selectionList by remember { mutableStateOf(setOf<String>()) }
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(10.dp, 0.dp, 10.dp, 0.dp)
     ) {
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                if (selectionList.isNotEmpty()) {
+        if (selectionList.isNotEmpty()) {
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     IconButton(onClick = {
                         selectionList = setOf()
                         onSelectionChange(false)
