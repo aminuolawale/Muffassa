@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.Screen
+import com.aminuolawale.muffassa.presentation.corpus.CorpusUri
 import com.aminuolawale.muffassa.presentation.home.components.HomeScaffold
 import com.aminuolawale.muffassa.presentation.home.components.CorpusList
 import kotlinx.coroutines.flow.collectLatest
@@ -16,11 +17,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             .viewEffect.collectLatest {
                 when (it) {
                     is HomeViewEffect.ViewCorpus -> {
-                        val uri =
-                            Uri.Builder().path(Screen.Corpus.route).appendPath(it.corpusId)
-                                .appendPath("home")
-                                .build()
-                        navController.navigate(uri.toString())
+                        navController.navigate(CorpusUri(it.corpusId).home)
                     }
 
                     HomeViewEffect.NoViewEffect -> {}
@@ -28,7 +25,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             }
     }
     HomeScaffold(viewModel = viewModel, navController = navController) {
-            CorpusList(viewModel, it)
+        CorpusList(viewModel, it)
     }
 }
 

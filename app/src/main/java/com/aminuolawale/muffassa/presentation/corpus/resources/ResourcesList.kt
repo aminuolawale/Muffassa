@@ -22,21 +22,23 @@ import com.aminuolawale.muffassa.presentation.components.FunctionalList
 import com.aminuolawale.muffassa.presentation.utils.Utils
 
 @Composable
-fun ResourcesList(resourcesViewModel: ResourcesViewModel) {
-    resourcesViewModel.state.collectAsState().let { state ->
-        FunctionalList(
-            listItems = state.value.resourcesList,
-            itemKey = { it.id },
-            onSelectionChange = { resourcesViewModel.onEvent(ResourcesEvent.SelectionChange(it)) },
-            onViewItem = {},
-            selectionActions =listOf {
-                IconButton(onClick = { resourcesViewModel.onEvent(ResourcesEvent.DeleteResources(it)) }) {
-                    Icon(Icons.Default.Delete, contentDescription = "Delete")
-                }
-            }, modifier = Modifier
-        ) {
-            ResourceItem(it)
-        }
+fun ResourcesList(
+    state: ResourcesViewState,
+    onSelectionChange: (Boolean) -> Unit,
+    onDeleteClick: (List<String>) -> Unit
+) {
+    FunctionalList(
+        listItems = state.resourcesList,
+        itemKey = { it.id },
+        onSelectionChange = onSelectionChange,
+        onViewItem = {},
+        selectionActions = listOf {
+            IconButton(onClick = { onDeleteClick(it) }) {
+                Icon(Icons.Default.Delete, contentDescription = "Delete")
+            }
+        }, modifier = Modifier
+    ) {
+        ResourceItem(it)
     }
 }
 

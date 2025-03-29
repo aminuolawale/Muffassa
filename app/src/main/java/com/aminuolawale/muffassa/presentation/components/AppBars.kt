@@ -34,7 +34,11 @@ fun MainAppBar(
                 onClick = { onButtonClick(Screen.Home.route) }) {
                 Icon(Icons.Default.Home, contentDescription = "Home")
             }
-            Icon(Icons.Default.Person, contentDescription = "Profile")
+            BottomBarTabButton(
+                isActive = screen == Screen.Profile,
+                onClick = { onButtonClick(Screen.Profile.route) }) {
+                Icon(Icons.Default.Person, contentDescription = "Profile")
+            }
         }
     }
 }

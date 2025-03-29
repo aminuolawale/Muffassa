@@ -6,10 +6,11 @@ import com.aminuolawale.muffassa.presentation.components.FormField
 class ResourceValidator(private val resource: Resource) {
 
     var errors: Map<FormField, List<String>> = mapOf()
-        get() {
-            validate()
-            return field
-        }
+    var isValid = false
+
+    init {
+      isValid = validate()
+    }
 
     private fun validate(): Boolean {
         errors = mapOf(FormField.NAME to validateName(), FormField.DATA to validateData())

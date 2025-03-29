@@ -44,7 +44,7 @@ class NewResourceViewModel @Inject constructor(private val resourceRepository: R
             NewResourceEvent.Save -> {
                 _state.value.resource?.let { resource ->
                     val resourceValidator = ResourceValidator(resource)
-                    if (resourceValidator.errors.isNotEmpty()) {
+                    if (!resourceValidator.isValid) {
                         _state.update { it.copy(errors = resourceValidator.errors) }
                     } else {
                         viewModelScope.launch {

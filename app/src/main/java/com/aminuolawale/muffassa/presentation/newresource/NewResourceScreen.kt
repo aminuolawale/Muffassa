@@ -1,5 +1,6 @@
 package com.aminuolawale.muffassa.presentation.newresource
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import com.aminuolawale.muffassa.domain.model.ResourceData
 import com.aminuolawale.muffassa.domain.model.ResourceType
 import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.corpus.CorpusTab
+import com.aminuolawale.muffassa.presentation.corpus.CorpusUri
 import com.aminuolawale.muffassa.presentation.newresource.components.DescriptionField
 import com.aminuolawale.muffassa.presentation.newresource.components.NameField
 import com.aminuolawale.muffassa.presentation.newresource.components.NewResourceScaffold
@@ -33,7 +35,9 @@ fun NewResourceScreen(
         viewModel.viewEffect.collectLatest { viewEffect ->
             when (viewEffect) {
                 NewResourceViewEffect.NoViewEffect -> {}
-                is NewResourceViewEffect.Saved -> navController.navigate(Screen.Corpus.route + "/${viewEffect.resource.corpusId}?tab=${CorpusTab.RESOURCES.ordinal}")
+                is NewResourceViewEffect.Saved -> {
+                    navController.navigate(CorpusUri(viewEffect.resource.corpusId).resources)
+                }
             }
         }
     }

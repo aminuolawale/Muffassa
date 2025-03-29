@@ -21,7 +21,7 @@ fun ProfileRoute(
     lifecycleScope: LifecycleCoroutineScope,
     googleAuthUiClient: GoogleAuthUiClient,
 ) {
-    ProfileScreen(userData = googleAuthUiClient.getSignedInUser()) {
+    ProfileScreen(navController, userData = googleAuthUiClient.getSignedInUser()) {
         lifecycleScope.launch {
             googleAuthUiClient.signOut()
             Toast.makeText(context, "Signed out", Toast.LENGTH_SHORT).show()

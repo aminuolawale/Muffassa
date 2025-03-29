@@ -33,7 +33,7 @@ fun HomeScaffold(
         MuffassaScaffold(
             screen = Screen.Home,
             navController = navController,
-            topBar = { HomeTopAppBar(viewModel, navController) },
+            topBar = { HomeTopAppBar(navController, state.value) },
             fab = { HomeFab(onClick = { viewModel.onEvent(HomeEvent.NewCorpus) }) }) {
             content(it)
         }

@@ -31,15 +31,14 @@ import com.aminuolawale.muffassa.presentation.home.HomeViewState
 
 @Composable
 fun HomeTopAppBar(
-    viewModel: HomeViewModel,
     navController: NavController,
+    state: HomeViewState,
 ) {
-    viewModel.state.collectAsState().let { state ->
-        if (!state.value.isSelecting) {
-            DefaultAppBar(
-                homeViewState = state.value,
-                onProfileClick = { navController.navigate(Screen.Profile.route) })
-        }
+    if (!state.isSelecting) {
+        DefaultAppBar(
+            title = { Text("Corpora") },
+            profilePictureUrl = state.userData?.profilePictureUrl,
+            onProfileClick = { navController.navigate(Screen.Profile.route) })
     }
 }
 
@@ -47,15 +46,16 @@ fun HomeTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultAppBar(
-    homeViewState: HomeViewState,
+    title: @Composable () -> Unit,
+    profilePictureUrl: String?,
     onProfileClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text("Corpora") },
+        title,
         actions = {
             Spacer(modifier = Modifier.width(10.dp))
             AsyncImage(
-                model = homeViewState.userData?.profilePictureUrl,
+                model = profilePictureUrl,
                 contentDescription = "profile image",
                 modifier = Modifier
                     .size(32.dp)
