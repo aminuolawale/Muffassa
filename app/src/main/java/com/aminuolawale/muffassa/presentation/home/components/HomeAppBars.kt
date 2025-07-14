@@ -34,7 +34,9 @@ fun HomeTopAppBar(
     navController: NavController,
     state: HomeViewState,
 ) {
-    if (!state.isSelecting) {
+    if (state.isSelecting) {
+        EmptyAppBar()
+    }else {
         DefaultAppBar(
             title = { Text("Corpora") },
             profilePictureUrl = state.userData?.profilePictureUrl,
@@ -67,6 +69,12 @@ fun DefaultAppBar(
             )
         },
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EmptyAppBar() {
+    TopAppBar(title= {}, actions = {})
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

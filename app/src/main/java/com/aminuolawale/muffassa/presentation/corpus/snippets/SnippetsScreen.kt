@@ -9,7 +9,6 @@ import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
 @Composable
 fun SnippetsScreen(navController: NavController, corpusViewModel: CorpusViewModel) {
     CorpusScaffold(navController, corpusViewModel) {
-
         Text("Snippets")
     }
 }

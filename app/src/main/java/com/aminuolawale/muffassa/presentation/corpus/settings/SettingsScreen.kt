@@ -4,8 +4,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
+import com.aminuolawale.muffassa.presentation.corpus.components.CorpusScaffold
 
 @Composable
 fun SettingsScreen(navController: NavController, corpusViewModel: CorpusViewModel) {
-    Text("Settings")
+    CorpusScaffold(navController, corpusViewModel) {
+        Text("Settings")
+    }
 }

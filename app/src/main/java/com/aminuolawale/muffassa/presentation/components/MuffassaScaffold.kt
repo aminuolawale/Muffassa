@@ -13,16 +13,13 @@ fun MuffassaScaffold(
     screen: Screen,
     navController: NavController,
     topBar: @Composable () -> Unit,
+    bottomBar: @Composable () -> Unit,
     fab: @Composable () -> Unit,
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
         topBar = topBar,
-        bottomBar = {
-            MainAppBar(screen) {
-                navController.navigate(it)
-            }
-        },
+        bottomBar = bottomBar,
         floatingActionButton = fab
     ) { contentPadding ->
         content(Modifier.padding(contentPadding))
