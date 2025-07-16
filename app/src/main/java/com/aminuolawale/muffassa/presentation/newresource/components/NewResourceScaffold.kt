@@ -3,7 +3,7 @@ package com.aminuolawale.muffassa.presentation.newresource.components
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.presentation.Screen
-import com.aminuolawale.muffassa.presentation.components.MainAppBar
+import com.aminuolawale.muffassa.presentation.components.MainBottomAppBar
 import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 import com.aminuolawale.muffassa.presentation.newresource.NewResourceEvent
 import com.aminuolawale.muffassa.presentation.newresource.NewResourceViewModel
@@ -22,7 +22,7 @@ fun NewResourceScaffold(
             NewResourcesTopAppBar(
                 onNavigationClick = { navController.popBackStack() })
         },
-        bottomBar = { MainAppBar(screen = Screen.Home) { navController.navigate(it) } },
+        bottomBar = { MainBottomAppBar(screen = Screen.Home) { navController.navigate(it) } },
         fab = {
             NewResourceFab(onClick = {
                 viewModel.onEvent(NewResourceEvent.Save)

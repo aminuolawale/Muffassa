@@ -16,7 +16,7 @@ import com.aminuolawale.muffassa.presentation.corpus.CorpusViewModel
 import com.aminuolawale.muffassa.presentation.home.components.CorpusCreationBottomSheet
 import com.aminuolawale.muffassa.presentation.newresource.components.ResourcesFab
 import androidx.compose.ui.unit.dp
-import com.aminuolawale.muffassa.presentation.components.MainAppBar
+import com.aminuolawale.muffassa.presentation.components.MainBottomAppBar
 
 
 @Composable
@@ -58,7 +58,7 @@ fun CorpusScaffold(
                             })
                     }
                 },
-                bottomBar = { MainAppBar(screen = Screen.Home) { navController.navigate(it) } },
+                bottomBar = { MainBottomAppBar(screen = Screen.Home) { navController.navigate(it) } },
                 fab = {
                     when (state.value.activeTab) {
                         CorpusTab.RESOURCES -> {

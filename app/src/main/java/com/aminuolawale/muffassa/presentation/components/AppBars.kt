@@ -17,7 +17,7 @@ import com.aminuolawale.muffassa.presentation.Screen
 import com.aminuolawale.muffassa.presentation.corpus.components.BottomBarTabButton
 
 @Composable
-fun MainAppBar(
+fun MainBottomAppBar(
     screen: Screen,
     onButtonClick: (String) -> Unit,
 ) {

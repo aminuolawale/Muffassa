@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.aminuolawale.muffassa.domain.model.Corpus
 import com.aminuolawale.muffassa.presentation.Screen
-import com.aminuolawale.muffassa.presentation.components.MainAppBar
+import com.aminuolawale.muffassa.presentation.components.MainBottomAppBar
 import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 import com.aminuolawale.muffassa.presentation.home.HomeEvent
 import com.aminuolawale.muffassa.presentation.home.HomeViewModel
@@ -37,7 +37,7 @@ fun HomeScaffold(
             topBar = { HomeTopAppBar(navController, state.value) },
             bottomBar = {
                 if (!state.value.isSelecting) {
-                    MainAppBar(screen = Screen.Home) { navController.navigate(it) }
+                    MainBottomAppBar(screen = Screen.Home) { navController.navigate(it) }
                 }
             },
             fab = { HomeFab(state.value, onClick = { viewModel.onEvent(HomeEvent.NewCorpus) }) }) {

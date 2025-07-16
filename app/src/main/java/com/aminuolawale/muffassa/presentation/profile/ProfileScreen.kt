@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.aminuolawale.muffassa.presentation.Screen
-import com.aminuolawale.muffassa.presentation.components.MainAppBar
+import com.aminuolawale.muffassa.presentation.components.MainBottomAppBar
 import com.aminuolawale.muffassa.presentation.components.MuffassaScaffold
 import com.aminuolawale.muffassa.presentation.home.components.DefaultAppBar
 import com.aminuolawale.muffassa.presentation.signin.UserData
@@ -34,7 +34,7 @@ fun ProfileScreen(navController: NavController, userData: UserData?, onSignOutCl
                 profilePictureUrl = userData?.profilePictureUrl,
                 onProfileClick = { navController.navigate(Screen.Profile.route) })
         },
-        bottomBar = { MainAppBar(screen = Screen.Home) { navController.navigate(it) } },
+        bottomBar = { MainBottomAppBar(screen = Screen.Home) { navController.navigate(it) } },
         fab = {}) {
         Column(
             modifier = Modifier.fillMaxSize(),
